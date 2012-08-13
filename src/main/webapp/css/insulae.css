@@ -1,43 +1,9 @@
 @CHARSET "ISO-8859-1";
 
-body {
-	margin-left: 0;
-	margin-right: 0;
-	margin-top: 0;
-}
+* { font-family: 'Arial'; font-size: 9px; color: #454570; margin: 0px; padding: 0px; }
+html { overflow-x:hidden; }
+table { border: 0px; cellspacing: 0px; cellpadding: 0px; }
+input { border: solid 1px #e5e5f0; padding: 0; margin: 0; width: 100px; font: '11px Arial'; font-color: #454570; }
 
-img {
-	border: 0;
-}
-
-div {
-	margin-left: auto;
-	margin-right: auto;
-	overflow: hidden;
-}
-
-.mainWrapper {
-  background: #ccc;
-}
-
-.leftColumn {
-  background: #fcc;
-  float: left;
-}
-
-.rightColumn {
-  background: #ccf;
-  float: right;
-}
-
-.center {
-  background: #cfc;
-}
-
-.header {
-  background: #ffc;
-}
-
-canvas:	focus {
-	outline: none;
-}
+#menuBar { background-image: url('../images/menuBar/bg.png'); background-repeat: repeat-x; height: 32px; width: 400px;}
+#loginForm { float: right; }

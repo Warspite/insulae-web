@@ -17,7 +17,7 @@ var Splash = function(targetProgress)
 	splashLogo.spatialSetPaused(false);
 	
 	this.loadingProgress = new ProgressBarNode("Loading . . .");
-	this.loadingProgress.renderSettings.position = {x: 0, y: -20};
+	this.loadingProgress.renderSettings.position = {x: 0, y: -5};
 	this.loadingProgress.renderSettings.anchor = {horizontal: Anchor.CENTER, vertical: Anchor.BOTTOM};
 	this.loadingProgress.renderSettings.origin = {horizontal: Origin.CENTER, vertical: Origin.BOTTOM};
 	this.loadingProgress.targetProgress = targetProgress;

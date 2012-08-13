@@ -1,6 +1,7 @@
 var Paths = {
 	IMAGE_ROOT: "images/",
-	JAVASCRIPT_ROOT: "js/"
+	JAVASCRIPT_ROOT: "js/",
+	SOUND_ROOT: "sound/"
 }
 
 function include(file) {
@@ -18,7 +19,7 @@ include("Splash.js");
 
 window.onload = function(event) {
 	var canvas = document.getElementById('mainCanvas');
-	var surface = new RenderSurface(canvas, {x: 25, y: 25});
+	var surface = new RenderSurface(canvas, {x: 25, y: 57});
 	var renderer = new Renderer(surface, "#ffffff");
 	var mouse = new Mouse(canvas, renderer);
 	var keyboard = new Keyboard(renderer);
@@ -35,6 +36,12 @@ window.onload = function(event) {
 	renderer.guiRoot.addChild(splash);
 	
 	setInterval(function(){ splash.loadingProgress.progress += 1; }, 350);
+	
+	setInterval(function(){
+		$("#menuBar").css("width", surface.width);
+	}, 
+	100);
+	
 	
 //	Session.set({id: 1, key: 123456});
 //	

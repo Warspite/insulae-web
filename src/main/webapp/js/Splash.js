@@ -21,7 +21,13 @@ var Splash = function(targetProgress)
 	this.loadingProgress.renderSettings.anchor = {horizontal: Anchor.CENTER, vertical: Anchor.BOTTOM};
 	this.loadingProgress.renderSettings.origin = {horizontal: Origin.CENTER, vertical: Origin.BOTTOM};
 	this.loadingProgress.targetProgress = targetProgress;
+	this.loadingProgress.addEventListener(this);
 	
 	this.addChild(splashLogo);
 	this.addChild(this.loadingProgress);
+	
+	$("#menuBar").block({ message: "" });
+	this.addEventHandler(EventType.PROGRESS_COMPLETE, function(self, source, event) {
+		$("#menuBar").unblock();
+	});
 };

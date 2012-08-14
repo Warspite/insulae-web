@@ -1,4 +1,4 @@
-var Splash = function(targetProgress)
+var Splash = function()
 {
 	mixin(new DynamicNode(), this);
 	this.renderSettings.sizing = {width: Sizing.PARENT, height: Sizing.PARENT};
@@ -20,7 +20,6 @@ var Splash = function(targetProgress)
 	this.loadingProgress.renderSettings.position = {x: 0, y: -5};
 	this.loadingProgress.renderSettings.anchor = {horizontal: Anchor.CENTER, vertical: Anchor.BOTTOM};
 	this.loadingProgress.renderSettings.origin = {horizontal: Origin.CENTER, vertical: Origin.BOTTOM};
-	this.loadingProgress.targetProgress = targetProgress;
 	this.loadingProgress.addEventListener(this);
 	
 	this.addChild(splashLogo);

@@ -17,6 +17,8 @@ function include(file) {
 include("lib/Include.js");
 include("Splash.js");
 
+include("data/StaticData.js");
+
 include("forms/AccountForm.js");
 
 window.onload = function(event) {
@@ -34,28 +36,11 @@ window.onload = function(event) {
 	ticker.addListener(keyboard);
 	ticker.addListener(renderer);
 	
-	var splash = new Splash(20);
+	var splash = new Splash();
 	renderer.guiRoot.addChild(splash);
 	
-	setInterval(function(){ splash.loadingProgress.progress += 1; }, 50);
+	setInterval(function(){ $("#menuBar").css("width", surface.width); }, 100);
 	
-	setInterval(function(){
-		$("#menuBar").css("width", surface.width);
-	}, 
-	100);
-	
+	var staticData = new StaticData(splash.loadingProgress);
 	AccountForm.setupLoginForm();
-	
-	
-//	Session.set({id: 1, key: 123456});
-//	
-//	Server.req("geography/Area", "GET", { "realmId": 1 }, function(result) {
-//		var hej = 0;
-//	});
-//	Server.req("world/Avatar", "GET", { "accountId": 1 }, function(result) {
-//		var hej = 0;
-//	});
-//	Server.req("account/Account", "PUT", { "email": "somethingfunny" }, function(result) {
-//		var hej = 0;
-//	});
 };

@@ -29,5 +29,6 @@ var Splash = function(targetProgress)
 	$("#menuBar").block({ message: "" });
 	this.addEventHandler(EventType.PROGRESS_COMPLETE, function(self, source, event) {
 		$("#menuBar").unblock();
+		$("#loginEmail").focus();
 	});
 };

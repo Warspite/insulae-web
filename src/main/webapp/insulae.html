@@ -11,11 +11,21 @@
 </head>
 <body>
 	<div id="menuBar" >
-		<div id="loginForm">
-			<table>
-				<tr><td>Email</td><td>Password</td></tr>
-				<tr><td><input type="text" id="loginEmail" class="login" /></td><td><input type="password" id="loginPassword" class="login" /></td></tr>
-			</table>
+		<div id="accountStatusContainer">
+			<div id="loginForm">
+				<table>
+					<tr><td style="width: 70px;">No account?</td><td>Email</td><td>Password</td><td></td></tr>
+					<tr>
+						<td>Sign up!</td>
+						<td><input type="text" id="loginEmail" class="loginInputField" /></td>
+						<td><input type="password" id="loginPassword" class="loginInputField" /></td>
+						<td><input type="submit" value="Login" id="loginButton" class="button" /></td></tr>
+				</table>
+			</div>
+	
+			<div id="currentSession">
+				You're logged in. <a href="#" id="logoutLink">Log out</a>
+			</div>
 		</div>
 	</div>
 	

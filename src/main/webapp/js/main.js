@@ -17,6 +17,8 @@ function include(file) {
 include("lib/Include.js");
 include("Splash.js");
 
+include("forms/AccountForm.js");
+
 window.onload = function(event) {
 	var canvas = document.getElementById('mainCanvas');
 	var surface = new RenderSurface(canvas, {x: 25, y: 57});
@@ -35,12 +37,14 @@ window.onload = function(event) {
 	var splash = new Splash(20);
 	renderer.guiRoot.addChild(splash);
 	
-	setInterval(function(){ splash.loadingProgress.progress += 1; }, 350);
+	setInterval(function(){ splash.loadingProgress.progress += 1; }, 50);
 	
 	setInterval(function(){
 		$("#menuBar").css("width", surface.width);
 	}, 
 	100);
+	
+	AccountForm.setupLoginForm();
 	
 	
 //	Session.set({id: 1, key: 123456});

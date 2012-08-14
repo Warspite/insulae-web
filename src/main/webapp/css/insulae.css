@@ -5,5 +5,9 @@ html { overflow-x:hidden; }
 table { border: 0px; cellspacing: 0px; cellpadding: 0px; }
 input { border: solid 1px #e5e5f0; padding: 0; margin: 0; width: 100px; font: '11px Arial'; font-color: #454570; }
 
-#menuBar { background-image: url('../images/menuBar/bg.png'); background-repeat: repeat-x; height: 32px; width: 400px;}
-#loginForm { float: right; }
+#menuBar { background-image: url('../images/menuBar/bg.png'); background-repeat: repeat-x; height: 32px; width: 400px; }
+#accountStatusContainer { float: right; }
+#currentSession { height: 0px; visibility: collapse; }
+#loginButton { width: 60px; }
+
+.button:hover { cursor: pointer; }

@@ -37,11 +37,17 @@ var MenuBar = {
 		Session.set({id: result.content.id, key: result.content.key});
 		MenuBar.hideChild("#loginForm");
 		MenuBar.showChild("#currentSession");
+
+		Server.req("world/Avatar", "GET", { "accountId": Session.get().id }, Widgets.avatarSelection, Widgets.avatarSelection.avatarsLoaded);
 	},
 
 	logoutSucceeded: function(result, self) {
 		MenuBar.hideChild("#currentSession");
 		MenuBar.showChild("#loginForm");
+		$('#loginEmail').val('');
+		$('#loginPassword').val('');
+		
+		Widgets.avatarSelection.rendered = false;
 	},
 	
 	logout: function() {

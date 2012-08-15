@@ -22,6 +22,9 @@ include("data/StaticData.js");
 include("html/MenuBar.js");
 include("html/RegisterAccount.js");
 
+include("widgets/AvatarSelectionWidget.js");
+include("widgets/Widgets.js");
+
 window.onload = function(event) {
 	var canvas = document.getElementById('mainCanvas');
 	var surface = new RenderSurface(canvas, {x: 25, y: 57});
@@ -42,7 +45,8 @@ window.onload = function(event) {
 	
 	setInterval(function(){ $("#menuBar").css("width", surface.width); }, 100);
 	
-	var staticData = new StaticData(splash.loadingProgress);
+	StaticData.load(splash.loadingProgress);
 	MenuBar.setup();
 	RegisterAccount.setup();
+	Widgets.setup(renderer.guiRoot);
 };

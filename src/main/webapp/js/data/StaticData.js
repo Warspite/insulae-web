@@ -1,48 +1,48 @@
-var StaticData = function(progressMeter)
-{
-	this.progressMeter = progressMeter;
+var StaticData = {
+	load: function(progressMeter) {
+		progressMeter.totalProgress = 7;
 
-	this.progressMeter.totalProgress = 7;
-	Server.req("geography/LocationType", "GET", null, this, this.locationTypesLoaded);
-	Server.req("geography/TransportationType", "GET", null, this, this.transportationTypesLoaded);
-	Server.req("geography/TransportationCost", "GET", null, this, this.transportationCostsLoaded);
-	Server.req("industry/BuildingType", "GET", null, this, this.buildingTypesLoaded);
-	Server.req("industry/ItemType", "GET", null, this, this.itemTypesLoaded);
-	Server.req("world/Realm", "GET", null, this, this.realmsLoaded);
-	Server.req("world/Race", "GET", null, this, this.racesLoaded);
-};
+		Server.req("geography/LocationType", "GET", null, progressMeter, StaticData.locationTypesLoaded);
+		Server.req("geography/TransportationType", "GET", null, progressMeter, StaticData.transportationTypesLoaded);
+		Server.req("geography/TransportationCost", "GET", null, progressMeter, StaticData.transportationCostsLoaded);
+		Server.req("industry/BuildingType", "GET", null, progressMeter, StaticData.buildingTypesLoaded);
+		Server.req("industry/ItemType", "GET", null, progressMeter, StaticData.itemTypesLoaded);
+		Server.req("world/Realm", "GET", null, progressMeter, StaticData.realmsLoaded);
+		Server.req("world/Race", "GET", null, progressMeter, StaticData.racesLoaded);
+	},
+	
+	locationTypesLoaded: function(result, progressMeter) {
+		StaticData.locationTypes = Server.mapify(result.content.locationTypes);
+		progressMeter.progress += 1;
+	},
 
-StaticData.prototype.locationTypesLoaded = function(result, self) {
-	self.locationTypes = Server.mapify(result.content.locationTypes);
-	self.progressMeter.progress += 1;
-};
+	transportationTypesLoaded: function(result, progressMeter) {
+		StaticData.transportationTypes = Server.mapify(result.content.transportationTypes);
+		progressMeter.progress += 1;
+	},
 
-StaticData.prototype.transportationTypesLoaded = function(result, self) {
-	self.transportationTypes = Server.mapify(result.content.transportationTypes);
-	self.progressMeter.progress += 1;
-};
+	transportationCostsLoaded: function(result, progressMeter) {
+		StaticData.transportationCosts = result.content.transportationCosts;
+		progressMeter.progress += 1;
+	},
 
-StaticData.prototype.transportationCostsLoaded = function(result, self) {
-	self.transportationCosts = result.content.transportationCosts;
-	self.progressMeter.progress += 1;
-};
+	buildingTypesLoaded: function(result, progressMeter) {
+		StaticData.buildingTypes = Server.mapify(result.content.buildingTypes);
+		progressMeter.progress += 1;
+	},
 
-StaticData.prototype.buildingTypesLoaded = function(result, self) {
-	self.buildingTypes = Server.mapify(result.content.buildingTypes);
-	self.progressMeter.progress += 1;
-};
+	itemTypesLoaded: function(result, progressMeter) {
+		StaticData.itemTypes = Server.mapify(result.content.itemTypes);
+		progressMeter.progress += 1;
+	},
 
-StaticData.prototype.itemTypesLoaded = function(result, self) {
-	self.itemTypes = Server.mapify(result.content.itemTypes);
-	self.progressMeter.progress += 1;
-};
+	realmsLoaded: function(result, progressMeter) {
+		StaticData.realms = Server.mapify(result.content.realms);
+		progressMeter.progress += 1;
+	},
 
-StaticData.prototype.realmsLoaded = function(result, self) {
-	self.realms = Server.mapify(result.content.realms);
-	self.progressMeter.progress += 1;
-};
-
-StaticData.prototype.racesLoaded = function(result, self) {
-	self.races = result.content.races;
-	self.progressMeter.progress += 1;
+	racesLoaded: function(result, progressMeter) {
+		StaticData.races = Server.mapify(result.content.races);
+		progressMeter.progress += 1;
+	},
 };

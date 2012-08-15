@@ -5,8 +5,8 @@ var Splash = function()
 	
 	var splashLogo = new DynamicNode();
 	splashLogo.renderSettings.position = {x: 0, y: 0};
-	splashLogo.renderSettings.anchor = {horizontal: Anchor.CENTER, vertical: Anchor.CENTER};
-	splashLogo.renderSettings.origin = {horizontal: Origin.CENTER, vertical: Origin.CENTER};
+	splashLogo.renderSettings.anchor = {horizontal: Direction.CENTER, vertical: Direction.CENTER};
+	splashLogo.renderSettings.origin = {horizontal: Direction.CENTER, vertical: Direction.CENTER};
 	splashLogo.renderSettings.sizing = {width: Sizing.PARENT, height: Sizing.PARENT};
 	splashLogo.renderSettings.sizeRatio = {ratio: 1600/1200, behavior: SizeRatioBehavior.SHRINK};
 	splashLogo.renderSettings.graphicsType = GraphicsType.IMAGE;
@@ -18,8 +18,8 @@ var Splash = function()
 	
 	this.loadingProgress = new ProgressBarNode("Loading . . .");
 	this.loadingProgress.renderSettings.position = {x: 0, y: -5};
-	this.loadingProgress.renderSettings.anchor = {horizontal: Anchor.CENTER, vertical: Anchor.BOTTOM};
-	this.loadingProgress.renderSettings.origin = {horizontal: Origin.CENTER, vertical: Origin.BOTTOM};
+	this.loadingProgress.renderSettings.anchor = {horizontal: Direction.CENTER, vertical: Direction.BOTTOM};
+	this.loadingProgress.renderSettings.origin = {horizontal: Direction.CENTER, vertical: Direction.BOTTOM};
 	this.loadingProgress.completeTextString = "Loading complete!"
 	this.loadingProgress.addEventListener(this);
 	

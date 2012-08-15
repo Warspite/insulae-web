@@ -4,7 +4,7 @@ apply plugin: 'maven'
 
 group = "com.warspite.insulae"
 ext.nextRelease = '0.2.1';
-ext.warspiteCommonVersion = '1.5.3';
+ext.warspiteCommonVersion = '1.5.4';
 
 if (project.hasProperty("release")) {
 	version = ext.nextRelease

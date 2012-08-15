@@ -19,7 +19,8 @@ include("Splash.js");
 
 include("data/StaticData.js");
 
-include("forms/AccountForm.js");
+include("html/MenuBar.js");
+include("html/RegisterAccount.js");
 
 window.onload = function(event) {
 	var canvas = document.getElementById('mainCanvas');
@@ -42,5 +43,6 @@ window.onload = function(event) {
 	setInterval(function(){ $("#menuBar").css("width", surface.width); }, 100);
 	
 	var staticData = new StaticData(splash.loadingProgress);
-	AccountForm.setupLoginForm();
+	MenuBar.setup();
+	RegisterAccount.setup();
 };

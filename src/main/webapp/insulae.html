@@ -7,26 +7,35 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
 	<link href="css/insulae.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="js/lib/3pp/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
 	<div id="menuBar" >
-		<div id="accountStatusContainer">
-			<div id="loginForm">
-				<table>
-					<tr><td style="width: 70px;">No account?</td><td>Email</td><td>Password</td><td></td></tr>
-					<tr>
-						<td>Sign up!</td>
-						<td><input type="text" id="loginEmail" class="loginInputField" /></td>
-						<td><input type="password" id="loginPassword" class="loginInputField" /></td>
-						<td><input type="submit" value="Login" id="loginButton" class="button" /></td></tr>
-				</table>
-			</div>
-	
-			<div id="currentSession">
-				You're logged in. <a href="#" id="logoutLink">Log out</a>
-			</div>
+		<div id="loginForm" class="menuBarChild">
+			<table>
+				<tr><td style="width: 70px;">No account?</td><td>Email</td><td>Password</td><td></td></tr>
+				<tr><td><a href="#" id="createAccountLink">Sign up!</a></td><td><input type="text" id="loginEmail" class="loginInputField" /></td><td><input type="password" id="loginPassword" class="loginInputField" /></td><td><input type="submit" value="Login" id="loginButton" class="loginInputField button" /></td></tr>
+			</table>
 		</div>
+
+		<div id="currentSession" class="menuBarChild">
+			You're logged in. <a href="#" id="logoutLink">Log out</a>
+		</div>
+	</div>
+	<div id="registerAccount" class="centeredPopup">
+		<h1>Create account</h1>
+		(<a href="#" id="cancelCreateAccountLink">Cancel</a>)<br />
+		<br />
+		<table>
+			<tr><td>Call sign</td><td><input type="text" id="registerCallSign" class="registerInputField" maxlength="10" /></td><td id="registerCallSignFeedback" class="formFeedback"></td></tr>
+			<tr><td>Given name</td><td><input type="text" id="registerGivenName" class="registerInputField" maxlength="20" /></td><td id="registerGivenNameFeedback" class="formFeedback"></td></tr>
+			<tr><td>Surname</td><td><input type="text" id="registerSurname" class="registerInputField" maxlength="20" /></td><td id="registerSurnameFeedback" class="formFeedback"></td></tr>
+			<tr><td>Email</td><td><input type="text" id="registerEmail" class="registerInputField" maxlength="40" /></td><td id="registerEmailFeedback" class="formFeedback"></td></tr>
+			<tr><td>Password</td><td><input type="password" id="registerPassword" class="registerInputField" maxlength="20" /></td><td id="registerPasswordFeedback" class="formFeedback"></td></tr>
+			<tr><td>Confirm password</td><td><input type="password" id="registerPasswordConfirm" class="registerInputField" maxlength="20" /></td><td id="registerPasswordConfirmFeedback" class="formFeedback"></td></tr>
+			<tr><td></td><td><input type="submit" value="Sign up" id="registerButton" class="registerInputField button disabled"/></td></tr>
+		</table>
 	</div>
 	
 	<canvas id="mainCanvas"></canvas>

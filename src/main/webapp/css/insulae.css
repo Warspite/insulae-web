@@ -1,13 +1,48 @@
 @CHARSET "ISO-8859-1";
 
-* { font-family: 'Arial'; font-size: 9px; color: #454570; margin: 0px; padding: 0px; }
+* { font-family: 'Arial'; font-size: 10px; color: #454570; margin: 0px; padding: 0px; }
+h1 { font-family: 'Arial'; font-size: 14px; font-weight: bold; color: #454570; margin: 0px; padding: 0px; }
+h2 { font-family: 'Arial'; font-size: 12px; font-weight: bold; color: #454570; margin: 0px; padding: 0px; }
 html { overflow-x:hidden; }
-table { border: 0px; cellspacing: 0px; cellpadding: 0px; }
+table { border: 0px; cellspacing: 0px; cellpadding: 0px; text-align: left; }
 input { border: solid 1px #e5e5f0; padding: 0; margin: 0; width: 100px; font: '11px Arial'; font-color: #454570; }
 
 #menuBar { background-image: url('../images/menuBar/bg.png'); background-repeat: repeat-x; height: 32px; width: 400px; }
-#accountStatusContainer { float: right; }
-#currentSession { height: 0px; visibility: collapse; }
 #loginButton { width: 60px; }
 
+.menuBarChild { height: 0px; visibility: collapse; float: right; }
 .button:hover { cursor: pointer; }
+
+.disabled { color: #808080; background-color: rgba(230,230,230,0.7); }
+.disabled:hover { cursor: default; }
+
+.centeredPopup { 
+	position: absolute; 
+	width: 380px; margin-left: -190px; 
+	max-height: 400px; margin-top: -100px;
+	left: 50%; 
+	top: 50%; 
+	z-index: 1; 
+	background-color: rgba(255,255,255,0.7);
+	overflow: auto;
+	padding: 5px;
+	text-align: center;
+	visibility: collapse;
+}
+
+.centeredPopup *{ 
+	margin: 0 auto;
+}
+
+.formError {
+	border-color: rgba(255,0,0,1.0);
+}
+
+.formFeedback {
+	width: 130px;
+}
+
+.formErrorFeedback {
+	background-color: rgba(255,0,0,0.2);
+	color: rgba(255,0,0,1.0);
+}

@@ -20,14 +20,14 @@ var Splash = function()
 	this.loadingProgress.renderSettings.position = {x: 0, y: -5};
 	this.loadingProgress.renderSettings.anchor = {horizontal: Anchor.CENTER, vertical: Anchor.BOTTOM};
 	this.loadingProgress.renderSettings.origin = {horizontal: Origin.CENTER, vertical: Origin.BOTTOM};
+	this.loadingProgress.completeTextString = "Loading complete!"
 	this.loadingProgress.addEventListener(this);
 	
 	this.addChild(splashLogo);
 	this.addChild(this.loadingProgress);
 	
-	$("#menuBar").block({ message: "" });
 	this.addEventHandler(EventType.PROGRESS_COMPLETE, function(self, source, event) {
-		$("#menuBar").unblock();
+		MenuBar.showChild("#loginForm");
 		$("#loginEmail").focus();
 	});
 };

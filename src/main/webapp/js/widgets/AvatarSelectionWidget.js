@@ -17,7 +17,7 @@ AvatarSelectionWidget.prototype.avatarsLoaded = function(result, self) {
 	self.content.addChild(self.createNewAvatarButton());
 	for(i in result.content.avatars) {
 		var a = result.content.avatars[i];
-		var btn = new IconLabelButtonNode(function(self) { Widgets.avatarSelection.selectAvatar(self.avatar) }, "icons/race/" + StaticData.races[a.raceId].canonicalName + ".png", a.name + "\n(" + StaticData.realms[a.realmId].name + ")");
+		var btn = new IconLabelButtonNode(function(self) { Widgets.avatarSelection.selectAvatar(self.avatar) }, "icons/race/" + StaticData.races[a.raceId].canonicalName + ".png", StaticData.sexes[a.sexId].title + " " + a.name + "\n(" + StaticData.realms[a.realmId].name + ")");
 		btn.avatar = a;
 		self.content.addChild(btn);
 	}
@@ -25,9 +25,20 @@ AvatarSelectionWidget.prototype.avatarsLoaded = function(result, self) {
 };
 
 AvatarSelectionWidget.prototype.createNewAvatarButton = function() {
-	return new IconLabelButtonNode(function() { console.log("Create new avatar!") }, "icons/createNewAvatar.png", "Create a new avatar");
+	return new IconLabelButtonNode(
+		function() { 
+			CreateAvatar.clear();
+			CreateAvatar.show();
+		}, 
+		"icons/createNewAvatar.png", 
+		"Create a new avatar"
+	);
 };
 
 AvatarSelectionWidget.prototype.selectAvatar = function(avatar) {
 	console.log("Avatar has been selected: " + avatar.name);
+};
+
+AvatarSelectionWidget.prototype.reload = function() {
+	Server.req("world/Avatar", "GET", { "accountId": Session.get().id }, Widgets.avatarSelection, Widgets.avatarSelection.avatarsLoaded);	
 };

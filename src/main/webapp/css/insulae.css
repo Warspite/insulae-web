@@ -5,10 +5,12 @@ h1 { font-family: 'Arial'; font-size: 14px; font-weight: bold; color: #454570; m
 h2 { font-family: 'Arial'; font-size: 12px; font-weight: bold; color: #454570; margin: 0px; padding: 0px; }
 html { overflow-x:hidden; }
 table { border: 0px; cellspacing: 0px; cellpadding: 0px; text-align: left; }
-input { border: solid 1px #e5e5f0; padding: 0; margin: 0; width: 100px; font: '11px Arial'; font-color: #454570; }
+input, select { border: solid 1px #e5e5f0; padding: 0; margin: 0; width: 125px; font: '11px Arial'; font-color: #454570; }
 
 #menuBar { background-image: url('../images/menuBar/bg.png'); background-repeat: repeat-x; height: 32px; width: 400px; }
 #loginButton { width: 60px; }
+
+.ajaxSpinner { width: 24px; height: 24px; float: left; visibility: collapse; background-image: url('../images/ajax-spinner.gif'); background-size: 24px 24px; }
 
 .menuBarChild { height: 0px; visibility: collapse; float: right; }
 .button:hover { cursor: pointer; }

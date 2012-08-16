@@ -24,7 +24,8 @@ var MenuBar = {
 		});
 		
 		$("#createAccountLink").click(function(event){
-			$('#registerAccount').css("visibility", "visible");
+			RegisterAccount.clear();
+			RegisterAccount.show();
 		});
 		
 	},
@@ -37,8 +38,8 @@ var MenuBar = {
 		Session.set({id: result.content.id, key: result.content.key});
 		MenuBar.hideChild("#loginForm");
 		MenuBar.showChild("#currentSession");
-
-		Server.req("world/Avatar", "GET", { "accountId": Session.get().id }, Widgets.avatarSelection, Widgets.avatarSelection.avatarsLoaded);
+		Widgets.avatarSelection.reload();
+		
 	},
 
 	logoutSucceeded: function(result, self) {

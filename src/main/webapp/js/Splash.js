@@ -27,6 +27,11 @@ var Splash = function()
 	this.addChild(this.loadingProgress);
 	
 	this.addEventHandler(EventType.PROGRESS_COMPLETE, function(self, source, event) {
+		MenuBar.setup();
+		RegisterAccount.setup();
+		CreateAvatar.setup();
+		Widgets.setup(self.parent);
+
 		MenuBar.showChild("#loginForm");
 		$("#loginEmail").focus();
 	});

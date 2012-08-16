@@ -1,6 +1,6 @@
 var StaticData = {
 	load: function(progressMeter) {
-		progressMeter.totalProgress = 7;
+		progressMeter.targetProgress = 8;
 
 		Server.req("geography/LocationType", "GET", null, progressMeter, StaticData.locationTypesLoaded);
 		Server.req("geography/TransportationType", "GET", null, progressMeter, StaticData.transportationTypesLoaded);
@@ -9,6 +9,7 @@ var StaticData = {
 		Server.req("industry/ItemType", "GET", null, progressMeter, StaticData.itemTypesLoaded);
 		Server.req("world/Realm", "GET", null, progressMeter, StaticData.realmsLoaded);
 		Server.req("world/Race", "GET", null, progressMeter, StaticData.racesLoaded);
+		Server.req("world/Sex", "GET", null, progressMeter, StaticData.sexesLoaded);
 	},
 	
 	locationTypesLoaded: function(result, progressMeter) {
@@ -43,6 +44,11 @@ var StaticData = {
 
 	racesLoaded: function(result, progressMeter) {
 		StaticData.races = Server.mapify(result.content.races);
+		progressMeter.progress += 1;
+	},
+
+	sexesLoaded: function(result, progressMeter) {
+		StaticData.sexes = Server.mapify(result.content.sexes);
 		progressMeter.progress += 1;
 	},
 };

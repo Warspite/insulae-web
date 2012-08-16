@@ -19,6 +19,8 @@ include("Splash.js");
 
 include("data/StaticData.js");
 
+include("html/CreateAvatar.js");
+include("html/FormUtility.js");
 include("html/MenuBar.js");
 include("html/RegisterAccount.js");
 
@@ -46,7 +48,4 @@ window.onload = function(event) {
 	setInterval(function(){ $("#menuBar").css("width", surface.width); }, 100);
 	
 	StaticData.load(splash.loadingProgress);
-	MenuBar.setup();
-	RegisterAccount.setup();
-	Widgets.setup(renderer.guiRoot);
 };

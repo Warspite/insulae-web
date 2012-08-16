@@ -23,9 +23,10 @@
 			You're logged in. <a href="#" id="logoutLink">Log out</a>
 		</div>
 	</div>
+	
 	<div id="registerAccount" class="centeredPopup">
 		<h1>Create account</h1>
-		(<a href="#" id="cancelCreateAccountLink">Cancel</a>)<br />
+		(<a href="#" id="cancelRegisterAccountLink">Cancel</a>)<br />
 		<br />
 		<table>
 			<tr><td>Call sign</td><td><input type="text" id="registerCallSign" class="registerInputField" maxlength="10" /></td><td id="registerCallSignFeedback" class="formFeedback"></td></tr>
@@ -35,6 +36,19 @@
 			<tr><td>Password</td><td><input type="password" id="registerPassword" class="registerInputField" maxlength="20" /></td><td id="registerPasswordFeedback" class="formFeedback"></td></tr>
 			<tr><td>Confirm password</td><td><input type="password" id="registerPasswordConfirm" class="registerInputField" maxlength="20" /></td><td id="registerPasswordConfirmFeedback" class="formFeedback"></td></tr>
 			<tr><td></td><td><input type="submit" value="Sign up" id="registerButton" class="registerInputField button disabled"/></td></tr>
+		</table>
+	</div>
+	
+	<div id="createAvatar" class="centeredPopup">
+		<h1>Create avatar</h1>
+		(<a href="#" id="cancelCreateAvatarLink">Cancel</a>)<br />
+		<br />
+		<table>
+			<tr><td>Name</td><td><input type="text" id="createAvatarName" class="createAvatarInputField" maxlength="20" /></td><td id="createAvatarNameFeedback" class="formFeedback"></td></tr>
+			<tr><td>Realm</td><td><select id="createAvatarRealm" class="createAvatarInputField" ></select></td></tr>
+			<tr><td>Race</td><td><select id="createAvatarRace" class="createAvatarInputField" disabled="disabled" ></select></td><td><div id="createAvatarRaceAjaxSpinner" class="ajaxSpinner" ></div></td></tr>
+			<tr><td>Sex</td><td><select id="createAvatarSex" class="createAvatarInputField" disabled="disabled"></select></td><td><div id="createAvatarSexAjaxSpinner" class="ajaxSpinner" ></div></td></tr>
+			<tr><td></td><td><input type="submit" value="Create avatar" id="createAvatarButton" class="createAvatarInputField button disabled"/></td></tr>
 		</table>
 	</div>
 	

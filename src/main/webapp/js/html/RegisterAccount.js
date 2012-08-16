@@ -1,4 +1,13 @@
 var RegisterAccount = {
+	textFields: [
+   	   	{id: '#registerCallSign', minLength: 4},
+   	   	{id: '#registerGivenName', minLength: 2},
+   	   	{id: '#registerSurname', minLength: 2},
+   	   	{id: '#registerEmail', minLength: 5},
+   	   	{id: '#registerPassword', minLength: 6},
+   	   	{id: '#registerPasswordConfirm'},
+   	],
+   	
 	setup: function() {
 		$(".registerInputField").keyup(function(event){
 			if(event.keyCode == 13)
@@ -9,10 +18,22 @@ var RegisterAccount = {
 					
 		});
 		
-		$("#cancelCreateAccountLink").click(function(event){
+		$("#cancelRegisterAccountLink").click(function(event){
 			$('#registerAccount').css("visibility", "collapse");
 		});
 	},
+	
+	clear: function() {
+		FormUtility.clear(RegisterAccount.textFields);
+	},
+	
+	show: function() {
+		$('#registerAccount').css("visibility", "visible");
+	},
+	
+	hide: function() {
+		$('#registerAccount').css("visibility", "collapse");
+	},	
 		
 	register: function(callSign, givenName, surname, email, password, passwordConfirm) {
 		Server.req("account/Account", "PUT", { email: email, password: password, surname: surname, givenName: givenName, callSign: callSign }, null, RegisterAccount.registrationSucceeded);
@@ -21,45 +42,9 @@ var RegisterAccount = {
 	evaluateForm: function(callSign, givenName, surname, email, password, passwordConfirm) {
 		var formOk = true;
 		
-		if( callSign.length < 4 ) {
-			formOk = false;
-			RegisterAccount.setFeedback('#registerCallSign', 'Min 4 characters requred.');
-		}
-		else {
-			RegisterAccount.setFeedback('#registerCallSign', null);
-		}
-		
-		if( givenName.length < 2 ) {
-			formOk = false;
-			RegisterAccount.setFeedback('#registerGivenName', 'Min 2 characters requred.');
-		}
-		else {
-			RegisterAccount.setFeedback('#registerGivenName', null);
-		}
-		
-		if( surname.length < 2 ) {
-			formOk = false;
-			RegisterAccount.setFeedback('#registerSurname', 'Min 2 characters requred.');
-		}
-		else {
-			RegisterAccount.setFeedback('#registerSurname', null);
-		}
-	
-		if( email.length < 5 ) {
-			formOk = false;
-			RegisterAccount.setFeedback(	'#registerEmail', 'Min 5 characters requred.');
-		}
-		else {
-			RegisterAccount.setFeedback('#registerEmail', null);
-		}
-	
-		if( password.length < 6 ) {
-			formOk = false;
-			RegisterAccount.setFeedback('#registerPassword', 'Min 6 characters requred.');
-		}
-		else {
-			RegisterAccount.setFeedback('#registerPassword', null);
-		}
+		for(i in RegisterAccount.textFields)
+			if(!FormUtility.evaluateTextField(RegisterAccount.textFields[i]))
+				formOk = false;
 	
 		if( passwordConfirm != password ) {
 			formOk = false;
@@ -69,12 +54,12 @@ var RegisterAccount = {
 			RegisterAccount.setFeedback('#registerPasswordConfirm', null);
 		}
 	
+		$("#registerButton").off('click.registerAccount');
 		if( formOk ) {
 			$("#registerButton").on('click.registerAccount', function(event){ RegisterAccount.register($('#registerCallSign').val(), $('#registerGivenName').val(), $('#registerSurname').val(), $('#registerEmail').val(), $('#registerPassword').val(), $('#registerPasswordConfirm').val()); });
 			$("#registerButton").removeClass('disabled');
 		}
 		else {
-			$("#registerButton").off('click.registerAccount');
 			$("#registerButton").addClass('disabled');
 		}
 

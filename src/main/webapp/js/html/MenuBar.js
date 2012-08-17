@@ -58,6 +58,8 @@ var MenuBar = {
 	
 	logout: function() {
 		Server.req("account/Session", "DELETE", null, null, MenuBar.logoutSucceeded);
+		Widgets.hideAll();
+		Scene.splash.rendered = true;
 	},
 	
 	loggedInAccountLoaded: function(result) {

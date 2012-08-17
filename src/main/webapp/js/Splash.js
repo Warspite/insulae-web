@@ -27,7 +27,7 @@ var Splash = function()
 	this.addChild(this.loadingProgress);
 	
 	this.addEventHandler(EventType.PROGRESS_COMPLETE, function(self, source, event) {
-		MenuBar.setup();
+		MenuBar.setup(self);
 		RegisterAccount.setup();
 		CreateAvatar.setup();
 		Widgets.setup(self.parent);

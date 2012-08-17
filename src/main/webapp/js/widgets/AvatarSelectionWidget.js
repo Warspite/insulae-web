@@ -36,7 +36,7 @@ AvatarSelectionWidget.prototype.createNewAvatarButton = function() {
 };
 
 AvatarSelectionWidget.prototype.selectAvatar = function(avatar) {
-	console.log("Avatar has been selected: " + avatar.name);
+	Server.req("geography/Area", "GET", {realmId: avatar.realmId}, Widgets.areaSelection, Widgets.areaSelection.areasLoaded);
 };
 
 AvatarSelectionWidget.prototype.reload = function() {

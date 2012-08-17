@@ -15,6 +15,7 @@ function include(file) {
 }
 	
 include("lib/Include.js");
+include("Scene.js");
 include("Splash.js");
 
 include("data/StaticData.js");
@@ -24,6 +25,7 @@ include("html/FormUtility.js");
 include("html/MenuBar.js");
 include("html/RegisterAccount.js");
 
+include("widgets/AreaSelectionWidget.js");
 include("widgets/AvatarSelectionWidget.js");
 include("widgets/Widgets.js");
 
@@ -42,10 +44,10 @@ window.onload = function(event) {
 	ticker.addListener(keyboard);
 	ticker.addListener(renderer);
 	
-	var splash = new Splash();
-	renderer.guiRoot.addChild(splash);
+	Scene.splash = new Splash();
+	renderer.guiRoot.addChild(Scene.splash);
 	
 	setInterval(function(){ $("#menuBar").css("width", surface.width); }, 100);
 	
-	StaticData.load(splash.loadingProgress);
+	StaticData.load(Scene.splash.loadingProgress);
 };

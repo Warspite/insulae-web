@@ -9,7 +9,7 @@ var MenuBar = {
 		$(id).css("visibility", "collapse");
 	},
 	
-	setup: function() {
+	setup: function(renderer) {
 		$(".loginInputField").keyup(function(event){
 			if(event.keyCode == 13)
 				$("#loginButton").click();
@@ -28,6 +28,7 @@ var MenuBar = {
 			RegisterAccount.show();
 		});
 		
+		setInterval(function(){ $("#menuBar").css("width", renderer.surface.width); }, 100);
 	},
 		
 	login: function(email, password) {

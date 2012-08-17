@@ -22,6 +22,7 @@ AvatarSelectionWidget.prototype.avatarsLoaded = function(result, self) {
 		self.content.addChild(btn);
 	}
 	self.rendered = true;
+	self.folded = false;
 };
 
 AvatarSelectionWidget.prototype.createNewAvatarButton = function() {

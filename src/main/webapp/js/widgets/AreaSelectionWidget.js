@@ -19,4 +19,5 @@ AreaSelectionWidget.prototype.areasLoaded = function(result, self) {
 		self.content.addChild(btn);
 	}
 	self.rendered = true;
+	self.folded = false;
 };

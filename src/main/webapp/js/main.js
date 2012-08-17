@@ -17,6 +17,7 @@ function include(file) {
 include("lib/Include.js");
 include("Overloads.js");
 include("Scene.js");
+include("SceneNodeMaps.js");
 include("Splash.js");
 
 include("data/StaticData.js");
@@ -27,6 +28,7 @@ include("html/FormUtility.js");
 include("html/MenuBar.js");
 include("html/RegisterAccount.js");
 
+include("nodes/BuildingNode.js");
 include("nodes/LocationNode.js");
 
 include("widgets/AreaSelectionWidget.js");

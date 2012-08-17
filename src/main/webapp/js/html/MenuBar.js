@@ -61,6 +61,8 @@ var MenuBar = {
 		$('#loginPassword').val('');
 		
 		Widgets.avatarSelection.rendered = false;
+		Widgets.areaSelection.rendered = false;
+		Scene.clear();
 	},
 	
 	logout: function() {

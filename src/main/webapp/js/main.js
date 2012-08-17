@@ -21,15 +21,20 @@ include("Splash.js");
 include("data/StaticData.js");
 
 include("html/CreateAvatar.js");
+include("html/Error.js");
 include("html/FormUtility.js");
 include("html/MenuBar.js");
 include("html/RegisterAccount.js");
+
+include("Overloads.js");
 
 include("widgets/AreaSelectionWidget.js");
 include("widgets/AvatarSelectionWidget.js");
 include("widgets/Widgets.js");
 
 window.onload = function(event) {
+	Overloads.setup();
+	
 	var canvas = document.getElementById('mainCanvas');
 	var surface = new RenderSurface(canvas, {x: 25, y: 57});
 	var renderer = new Renderer(surface, "#ffffff");

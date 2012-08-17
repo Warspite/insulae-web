@@ -31,7 +31,7 @@ var MenuBar = {
 	},
 		
 	login: function(email, password) {
-		Server.req("account/Session", "PUT", { "email": email, "password": password }, null, MenuBar.loginSucceeded);
+		Server.req("account/Session", "PUT", { "email": email, "password": password }, null, MenuBar.loginSucceeded, MenuBar.loginFailed);
 	},
 	
 	loginSucceeded: function(result, self) {
@@ -43,6 +43,12 @@ var MenuBar = {
 		Server.req("account/Account", "GET", {id: Session.get().id}, null, MenuBar.loggedInAccountLoaded)
 		
 	},
+	
+	loginFailed: function(result) {
+		Error.setMessage("<h2>Login failed:</h2><br/>" + result.message);
+		Error.show();
+	},
+
 
 	logoutSucceeded: function(result, self) {
 		Session.set(null);

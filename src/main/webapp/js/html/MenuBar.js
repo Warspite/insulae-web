@@ -40,9 +40,14 @@ var MenuBar = {
 		MenuBar.showChild("#currentSession");
 		Widgets.avatarSelection.reload();
 		
+		Server.req("account/Account", "GET", {id: Session.get().id}, null, MenuBar.loggedInAccountLoaded)
+		
 	},
 
 	logoutSucceeded: function(result, self) {
+		Session.set(null);
+		Session.currentAccount = null;
+		
 		MenuBar.hideChild("#currentSession");
 		MenuBar.showChild("#loginForm");
 		$('#loginEmail').val('');
@@ -53,5 +58,10 @@ var MenuBar = {
 	
 	logout: function() {
 		Server.req("account/Session", "DELETE", null, null, MenuBar.logoutSucceeded);
+	},
+	
+	loggedInAccountLoaded: function(result) {
+		Session.currentAccount = result.content;
+		$('#currentSessionWelcome').html('Welcome, ' + Session.currentAccount.givenName + '!');
 	}
 };

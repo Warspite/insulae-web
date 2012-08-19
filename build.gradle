@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 
 group = "com.warspite.insulae"
-ext.nextRelease = '0.2.3';
+ext.nextRelease = '0.2.4';
 ext.warspiteCommonVersion = '1.5.5';
 
 if (project.hasProperty("release")) {

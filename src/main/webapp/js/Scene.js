@@ -5,13 +5,29 @@ var Scene = {
 		Scene.renderer.guiRoot.addChild(Scene.splash);
 		Scene.nodeMaps = new SceneNodeMaps();
 		Scene.selectedArea = null;
+		Scene.selectedNode = null;
+		
+		Scene.selectedNodeMarker = new RenderedNode();
+		Scene.selectedNodeMarker.renderSettings.graphicsType = GraphicsType.IMAGE;
+		Scene.selectedNodeMarker.renderSettings.image = "selection.png";
+		Animator.spatialAnimate(Scene.selectedNodeMarker);
+		Scene.selectedNodeMarker.animationSettings.rotationSpeed = 1.0;
+		Scene.selectedNodeMarker.renderSettings.origin = {horizontal: Direction.CENTER, vertical: Direction.CENTER};
+		Scene.selectedNodeMarker.renderSettings.anchor = {horizontal: Direction.CENTER, vertical: Direction.CENTER};
+		Scene.selectedNodeMarker.spatialTogglePause();
+		Scene.selectedNodeMarker.rendered = false;
+		Scene.selectedNodeMarker.zIndex = -1;
 	},
 	
 	clear: function() {
 		if(Scene.locationsContainer)
 			Scene.renderer.sceneRoot.removeChild(Scene.locationsContainer);
 		
+		if(Scene.buildingsContainer)
+			Scene.renderer.sceneRoot.removeChild(Scene.buildingsContainer);
+		
 		Scene.nodeMaps.clearAll();
+		Scene.selectedNode = null;
 	},
 	
 	selectArea: function(area) {
@@ -37,12 +53,28 @@ var Scene = {
 
 	buildingsLoaded: function(result) {
 		Scene.nodeMaps.buildings = {};
+		Scene.buildingsContainer = new RenderedNode();
+		Scene.buildingsContainer.zIndex = 1;
+		Scene.renderer.sceneRoot.addChild(Scene.buildingsContainer);
 		
 		$.each(result.content.buildings, function(index, b) {
-			var bNode = new BuildingNode(b);
-			var locNode = Scene.nodeMaps.locations[b.locationId];
-			locNode.addChild(bNode);
+			var bNode = new BuildingNode(b, Scene.nodeMaps.locations[b.locationId]);
+			Scene.buildingsContainer.addChild(bNode);
 			Scene.nodeMaps.buildings[b.id] = bNode;
 		});
+	},
+	
+	selectNode: function(node) { 
+		if(Scene.selectedNodeMarker.parent)
+			Scene.selectedNodeMarker.parent.removeChild(Scene.selectedNodeMarker);
+		
+		if(node) {
+			node.addChild(Scene.selectedNodeMarker);
+			Scene.selectedNodeMarker.renderSettings.size = {width: node.renderSettings.size.width * 1.35, height: node.renderSettings.size.height * 1.35};
+			Scene.selectedNodeMarker.rendered = true;
+		}
+		else {
+			Scene.selectedNodeMarker.rendered = false;
+		}
 	}
 };

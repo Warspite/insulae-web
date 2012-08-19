@@ -35,6 +35,7 @@ var Scene = {
 		Server.req("geography/Location", "GET", {areaId: Scene.selectedArea.id}, null, Scene.locationsLoaded);
 		Scene.splash.rendered = false;
 		Scene.renderer.sceneRoot.reset();
+		Widgets.actionPanel.rendered = true;
 	},
 	
 	locationsLoaded: function(result) {
@@ -72,9 +73,13 @@ var Scene = {
 			node.addChild(Scene.selectedNodeMarker);
 			Scene.selectedNodeMarker.renderSettings.size = {width: node.renderSettings.size.width * 1.35, height: node.renderSettings.size.height * 1.35};
 			Scene.selectedNodeMarker.rendered = true;
+			
+			if(node.constructor == BuildingNode)
+				Widgets.actionPanel.displayBuildingActions(node.data);
 		}
 		else {
 			Scene.selectedNodeMarker.rendered = false;
+			Widgets.actionPanel.clear();
 		}
 	}
 };

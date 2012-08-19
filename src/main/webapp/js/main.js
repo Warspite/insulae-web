@@ -28,9 +28,11 @@ include("html/FormUtility.js");
 include("html/MenuBar.js");
 include("html/RegisterAccount.js");
 
+include("nodes/ActionButtonNode.js");
 include("nodes/BuildingNode.js");
 include("nodes/LocationNode.js");
 
+include("widgets/ActionPanelWidget.js");
 include("widgets/AreaSelectionWidget.js");
 include("widgets/AvatarSelectionWidget.js");
 include("widgets/Widgets.js");

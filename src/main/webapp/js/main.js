@@ -30,11 +30,14 @@ include("html/RegisterAccount.js");
 
 include("nodes/ActionButtonNode.js");
 include("nodes/BuildingNode.js");
+include("nodes/ItemStorageNode.js");
+include("nodes/ItemStorageTableNode.js");
 include("nodes/LocationNode.js");
 
 include("widgets/ActionPanelWidget.js");
 include("widgets/AreaSelectionWidget.js");
 include("widgets/AvatarSelectionWidget.js");
+include("widgets/SelectionInfoPanelWidget.js");
 include("widgets/Widgets.js");
 
 window.onload = function(event) {

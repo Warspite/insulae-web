@@ -36,6 +36,7 @@ var Scene = {
 		Scene.splash.rendered = false;
 		Scene.renderer.sceneRoot.reset();
 		Widgets.actionPanel.rendered = true;
+		Widgets.selectionInfoPanel.rendered = true;
 	},
 	
 	locationsLoaded: function(result) {
@@ -74,12 +75,15 @@ var Scene = {
 			Scene.selectedNodeMarker.renderSettings.size = {width: node.renderSettings.size.width * 1.35, height: node.renderSettings.size.height * 1.35};
 			Scene.selectedNodeMarker.rendered = true;
 			
-			if(node.constructor == BuildingNode)
+			if(node.constructor == BuildingNode) {
 				Widgets.actionPanel.displayBuildingActions(node.data);
+				Widgets.selectionInfoPanel.displayBuildingInfo(node.data);
+			}
 		}
 		else {
 			Scene.selectedNodeMarker.rendered = false;
 			Widgets.actionPanel.clear();
+			Widgets.selectionInfoPanel.clear();
 		}
 	}
 };

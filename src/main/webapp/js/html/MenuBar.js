@@ -62,6 +62,9 @@ var MenuBar = {
 		
 		Widgets.avatarSelection.rendered = false;
 		Widgets.areaSelection.rendered = false;
+		Widgets.selectionInfoPanel.rendered = false;
+		Widgets.actionPanel.rendered = false;
+		Widgets.actionDialog.rendered = false;
 		Scene.clear();
 	},
 	

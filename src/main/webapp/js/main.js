@@ -34,6 +34,7 @@ include("nodes/ItemStorageNode.js");
 include("nodes/ItemStorageTableNode.js");
 include("nodes/LocationNode.js");
 
+include("widgets/ActionDialogWidget.js");
 include("widgets/ActionPanelWidget.js");
 include("widgets/AreaSelectionWidget.js");
 include("widgets/AvatarSelectionWidget.js");

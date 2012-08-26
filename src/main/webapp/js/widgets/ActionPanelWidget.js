@@ -39,5 +39,5 @@ ActionPanelWidget.prototype.actionsOfBuildingLoaded = function(result) {
 };
 
 ActionPanelWidget.prototype.performAction = function(action) {
-	console.log("I will now perform action " + action.name);
+	Widgets.actionDialog.displayAction(action, Widgets.actionPanel.lastSelectedBuilding);
 };

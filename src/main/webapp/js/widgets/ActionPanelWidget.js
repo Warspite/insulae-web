@@ -16,11 +16,15 @@ ActionPanelWidget.prototype.clear = function() {
 };
 
 ActionPanelWidget.prototype.displayBuildingActions = function(building) {
+	this.lastSelectedBuilding = building;
 	Server.req("industry/Action", "GET", {buildingTypeId: building.buildingTypeId}, null, Widgets.actionPanel.actionsOfBuildingLoaded);
 };
 
 ActionPanelWidget.prototype.actionsOfBuildingLoaded = function(result) {
 	Widgets.actionPanel.clear();
+	
+	if(!Widgets.actionPanel.lastSelectedBuilding)
+		return;
 
 	for(i in result.content.actions) {
 		if(i >= Widgets.actionPanel.maximumNumberOfButtons) {
@@ -29,7 +33,7 @@ ActionPanelWidget.prototype.actionsOfBuildingLoaded = function(result) {
 			break;
 		}
 			
-		var btn = new ActionButtonNode({x: i % 4, y: Math.floor(i / 4)}, result.content.actions[i]);
+		var btn = new ActionButtonNode({x: i % 4, y: Math.floor(i / 4)}, result.content.actions[i], Widgets.actionPanel.lastSelectedBuilding);
 		Widgets.actionPanel.addChild(btn);
 	}
 };

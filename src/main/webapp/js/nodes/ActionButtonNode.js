@@ -1,4 +1,4 @@
-var ActionButtonNode = function(slot, action) {
+var ActionButtonNode = function(slot, action, building) {
 	var self = this;
 	mixin(new ButtonNode(self.clicked), this);
 	
@@ -10,15 +10,22 @@ var ActionButtonNode = function(slot, action) {
 	this.renderSettings.graphicsType = GraphicsType.ANIMATION;
 	this.renderSettings.size = {width: 48, height: 48};
 	this.renderSettings.position = {x: slot.x * 52 + 8, y: slot.y * 52 + 8};
-	this.renderSettings.image = "icons/actionButton/" + StaticData.actions[action.id].canonicalName + ".png";
 	this.action  = action;
 	
-	var tooltipString = action.name;
+	this.totalActionPointCost = action.actionPointCost + building.hubDistanceCost;
+	
+	if(this.totalActionPointCost > building.actionPoints)
+		this.renderSettings.image = "icons/actionButton/" + StaticData.actions[action.id].canonicalName + "-disabled.png";
+	else
+		this.renderSettings.image = "icons/actionButton/" + StaticData.actions[action.id].canonicalName + ".png";
+
+	
+	var tooltipString = action.name + "\nRequires action points: " + this.totalActionPointCost + "\n   (" + action.actionPointCost + " base + " + building.hubDistanceCost + " hub distance)";
 	
 	for(i in StaticData.actionItemCosts) {
 		var c = StaticData.actionItemCosts[i];
 		if(c.actionId == action.id)
-			tooltipString += "\n" + StaticData.itemTypes[c.itemTypeId].name + ": " + c.amount;
+			tooltipString += "\nRequires " + StaticData.itemTypes[c.itemTypeId].name + ": " + c.amount;
 	}
 	
 	Tooltipper.tooltipify(this, tooltipString);

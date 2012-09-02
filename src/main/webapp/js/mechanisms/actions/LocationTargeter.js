@@ -1,4 +1,5 @@
-var LocationTargeter = function() {
+var LocationTargeter = function(filter) {
+	this.filter = filter;
 	Input.keyboard.addEventListener(this);
 };
 
@@ -7,10 +8,14 @@ LocationTargeter.prototype.select = function(p) {
 	this.params = p || {};
 	
 	if(!Scene.nodeMaps.locations)
-		return;
+		throw "The scene has no location nodes loaded."
+		
+	if(!this.params.callbackParameters || !this.params.callbackParameters.action || !this.params.callbackParameters.agent )
+		throw "Callback parameters are invalid or nonexistent."
 	
-	$.each(Scene.nodeMaps.locations, function(index, locNode) {
-		Scene.targetingOverlayContainer.addChild(new LocationTargetingNode(locNode));
+	var options = this.filter.filter(this.params.callbackParameters.action, this.params.callbackParameters.agent);
+	$.each(options, function(index, l) {
+		Scene.targetingOverlayContainer.addChild(new LocationTargetingNode(Scene.nodeMaps.locations[l.id]));
 	});
 };
 	

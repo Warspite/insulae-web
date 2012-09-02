@@ -17,12 +17,12 @@ function include(file) {
 include("lib/Include.js");
 
 include("Input.js");
-include("LocationTargeter.js");
 include("Overloads.js");
 include("Scene.js");
 include("SceneNodeMaps.js");
 include("Splash.js");
 
+include("data/DynamicData.js");
 include("data/StaticData.js");
 
 include("html/CreateAvatar.js");
@@ -30,6 +30,9 @@ include("html/Error.js");
 include("html/FormUtility.js");
 include("html/MenuBar.js");
 include("html/RegisterAccount.js");
+
+include("mechanisms/actions/LocationTargeter.js");
+include("mechanisms/actions/LocationTargetFilter.js");
 
 include("nodes/ActionButtonNode.js");
 include("nodes/BuildingNode.js");
@@ -61,5 +64,6 @@ window.onload = function(event) {
 	
 	Scene.setup(renderer);
 	
+	DynamicData.setup();
 	StaticData.load(Scene.splash.loadingProgress);
 };

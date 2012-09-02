@@ -7,7 +7,7 @@ var Scene = {
 		Scene.selectedArea = null;
 		Scene.selectedNode = null;
 
-		Scene.locationTargeter = new LocationTargeter();
+		Scene.locationTargeter = new LocationTargeter(new LocationTargetFilter());
 		Scene.targetingOverlayContainer = new RenderedNode();
 		Scene.targetingOverlayContainer.zIndex = 100;
 		Scene.renderer.sceneRoot.addChild(Scene.targetingOverlayContainer);
@@ -41,13 +41,19 @@ var Scene = {
 	selectArea: function(area) {
 		Scene.selectedArea = area;
 		Server.req("geography/Location", "GET", {areaId: Scene.selectedArea.id}, null, Scene.locationsLoaded);
+		Server.req("geography/LocationNeighbor", "GET", {areaId: Scene.selectedArea.id}, null, Scene.locationNeighborsLoaded);
 		Scene.splash.rendered = false;
 		Scene.renderer.sceneRoot.reset();
 		Widgets.actionPanel.rendered = true;
 		Widgets.selectionInfoPanel.rendered = true;
 	},
 	
+	locationNeighborsLoaded: function(result) {
+		DynamicData.addLocationNeighbors(result.content.locationNeighbors);
+	},
+	
 	locationsLoaded: function(result) {
+		DynamicData.addLocations(result.content.locations);
 		Scene.clear();
 		Scene.locationsContainer = new RenderedNode();
 		Scene.renderer.sceneRoot.addChild(Scene.locationsContainer);
@@ -62,6 +68,7 @@ var Scene = {
 	},
 
 	buildingsLoaded: function(result) {
+		DynamicData.addBuildings(result.content.buildings);
 		Scene.nodeMaps.buildings = {};
 		Scene.buildingsContainer = new RenderedNode();
 		Scene.buildingsContainer.zIndex = 1;
@@ -74,7 +81,8 @@ var Scene = {
 		});
 	},
 	
-	selectNode: function(node) { 
+	selectNode: function(node) {
+		Scene.locationTargeter.cancel();
 		if(Scene.selectedNodeMarker.parent)
 			Scene.selectedNodeMarker.parent.removeChild(Scene.selectedNodeMarker);
 		

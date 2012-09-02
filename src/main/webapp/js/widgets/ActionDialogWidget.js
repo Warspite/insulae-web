@@ -103,6 +103,9 @@ var ActionDialogWidget = function() {
 	this.outputBoxNonItemOutputStack.orientation = Orientation.HORIZONTAL;
 	this.outputBoxNonItemOutputStack.renderSettings.position.y = 25;
 	
+	this.outputBoxItems = new ItemStorageTableNode(3, 1);
+	this.outputBoxItems.renderSettings.position.y = 60;
+	
 	this.outputBoxBuildingIcon = new TextNode("Action output");
 
 	var okButton = new ButtonNode( self.performAction );
@@ -134,6 +137,7 @@ var ActionDialogWidget = function() {
 	
 	this.outputBox.addChild(this.outputBoxTitle);
 	this.outputBox.addChild(this.outputBoxNonItemOutputStack);
+	this.outputBox.addChild(this.outputBoxItems);
 	
 	upperHorizontalStackPanel.addChild(this.actionInfoBox);
 	upperHorizontalStackPanel.addChild(this.locationInfoBox);
@@ -211,6 +215,15 @@ ActionDialogWidget.prototype.updateOutput = function() {
 		Tooltipper.tooltipify(constructedBuildingIcon, t.name + "\n" + t.description);
 		this.outputBoxNonItemOutputStack.addChild(constructedBuildingIcon);
 	}
+	
+	this.outputBoxItems.clear();
+	var outputItems = new Array();
+	$.each(StaticData.actionItemOutputs, function(index, output) {
+		if(output.actionId == Widgets.actionDialog.params.action.id)
+			outputItems.push(output);
+	});
+	this.outputBoxItems.setStorage(outputItems);
+	
 };
 
 ActionDialogWidget.prototype.updateInput = function() {

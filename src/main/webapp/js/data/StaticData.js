@@ -1,6 +1,6 @@
 var StaticData = {
 	load: function(progressMeter) {
-		progressMeter.targetProgress = 10;
+		progressMeter.targetProgress = 11;
 
 		Server.req("geography/LocationType", "GET", null, progressMeter, StaticData.locationTypesLoaded);
 		Server.req("geography/TransportationType", "GET", null, progressMeter, StaticData.transportationTypesLoaded);
@@ -9,6 +9,7 @@ var StaticData = {
 		Server.req("industry/ItemType", "GET", null, progressMeter, StaticData.itemTypesLoaded);
 		Server.req("industry/Action", "GET", null, progressMeter, StaticData.actionsLoaded);
 		Server.req("industry/ActionItemCost", "GET", null, progressMeter, StaticData.actionItemCostsLoaded);
+		Server.req("industry/ActionItemOutput", "GET", null, progressMeter, StaticData.actionItemOutputsLoaded);
 		Server.req("world/Realm", "GET", null, progressMeter, StaticData.realmsLoaded);
 		Server.req("world/Race", "GET", null, progressMeter, StaticData.racesLoaded);
 		Server.req("world/Sex", "GET", null, progressMeter, StaticData.sexesLoaded);
@@ -61,6 +62,11 @@ var StaticData = {
 
 	actionItemCostsLoaded: function(result, progressMeter) {
 		StaticData.actionItemCosts = result.content.actionItemCosts;
+		progressMeter.progress += 1;
+	},
+
+	actionItemOutputsLoaded: function(result, progressMeter) {
+		StaticData.actionItemOutputs = result.content.actionItemOutputs;
 		progressMeter.progress += 1;
 	},
 };

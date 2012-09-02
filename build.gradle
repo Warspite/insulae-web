@@ -3,8 +3,8 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 
 group = "com.warspite.insulae"
-ext.nextRelease = '0.2.8';
-ext.warspiteCommonVersion = '1.5.11';
+ext.nextRelease = '0.2.9';
+ext.warspiteCommonVersion = '1.5.12';
 
 if (project.hasProperty("release")) {
 	version = ext.nextRelease

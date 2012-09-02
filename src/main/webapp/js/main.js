@@ -15,6 +15,9 @@ function include(file) {
 }
 	
 include("lib/Include.js");
+
+include("Input.js");
+include("LocationTargeter.js");
 include("Overloads.js");
 include("Scene.js");
 include("SceneNodeMaps.js");
@@ -33,6 +36,7 @@ include("nodes/BuildingNode.js");
 include("nodes/ItemStorageNode.js");
 include("nodes/ItemStorageTableNode.js");
 include("nodes/LocationNode.js");
+include("nodes/LocationTargetingNode.js");
 
 include("widgets/ActionDialogWidget.js");
 include("widgets/ActionPanelWidget.js");
@@ -47,15 +51,12 @@ window.onload = function(event) {
 	var canvas = document.getElementById('mainCanvas');
 	var surface = new RenderSurface(canvas, {x: 25, y: 57});
 	var renderer = new Renderer(surface, "#ffffff");
-	var mouse = new Mouse(canvas, renderer);
-	var keyboard = new Keyboard(renderer);
-	
-	keyboard.addEventListener(renderer);
-	mouse.addEventListener(renderer);
 
+	Input.setup(canvas, renderer);
+	
 	var ticker = new Ticker(25);
-	ticker.addListener(mouse);
-	ticker.addListener(keyboard);
+	ticker.addListener(Input.mouse);
+	ticker.addListener(Input.keyboard);
 	ticker.addListener(renderer);
 	
 	Scene.setup(renderer);

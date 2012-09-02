@@ -11,8 +11,10 @@ var MenuBar = {
 	
 	setup: function(renderer) {
 		$(".loginInputField").keyup(function(event){
-			if(event.keyCode == 13)
+			if(event.keyCode == 13) {
 				$("#loginButton").click();
+				$("#" + event.currentTarget.id).blur();
+			}
 		});
 		
 		$("#loginButton").click(function(event){

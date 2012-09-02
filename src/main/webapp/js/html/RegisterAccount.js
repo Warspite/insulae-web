@@ -10,8 +10,10 @@ var RegisterAccount = {
    	
 	setup: function() {
 		$(".registerInputField").keyup(function(event){
-			if(event.keyCode == 13)
+			if(event.keyCode == 13) {
 				$("#registerButton").click();
+				$("#" + event.currentTarget.id).blur();
+			}
 			else {
 				RegisterAccount.evaluateForm($('#registerCallSign').val(), $('#registerGivenName').val(), $('#registerSurname').val(), $('#registerEmail').val(), $('#registerPassword').val(), $('#registerPasswordConfirm').val());
 			}

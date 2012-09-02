@@ -1,9 +1,9 @@
 var SceneNodeMaps = function() {
-	this.locations = {};
-	this.buildings = {};
+	this.clearAll();
 };
 
 SceneNodeMaps.prototype.clearAll = function() {
-		this.locations = {};
-		this.buildings = {};
+	this.locations = {};
+	this.buildings = {};
+	this.selectionNodes = {};
 };

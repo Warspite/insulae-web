@@ -5,8 +5,10 @@ var CreateAvatar = {
 
 	setup: function() {
 		$(".createAvatarInputField").keyup(function(event){
-			if(event.keyCode == 13)
+			if(event.keyCode == 13) {
 				$("#createAvatarButton").click();
+				$("#" + event.currentTarget.id).blur();
+			}
 			else {
 				CreateAvatar.evaluateForm();
 			}

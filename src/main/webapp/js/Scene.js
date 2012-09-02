@@ -6,6 +6,11 @@ var Scene = {
 		Scene.nodeMaps = new SceneNodeMaps();
 		Scene.selectedArea = null;
 		Scene.selectedNode = null;
+
+		Scene.locationTargeter = new LocationTargeter();
+		Scene.targetingOverlayContainer = new RenderedNode();
+		Scene.targetingOverlayContainer.zIndex = 100;
+		Scene.renderer.sceneRoot.addChild(Scene.targetingOverlayContainer);
 		
 		Scene.selectedNodeMarker = new RenderedNode();
 		Scene.selectedNodeMarker.renderSettings.graphicsType = GraphicsType.IMAGE;
@@ -17,6 +22,7 @@ var Scene = {
 		Scene.selectedNodeMarker.spatialTogglePause();
 		Scene.selectedNodeMarker.rendered = false;
 		Scene.selectedNodeMarker.zIndex = -1;
+		
 	},
 	
 	clear: function() {
@@ -25,6 +31,8 @@ var Scene = {
 		
 		if(Scene.buildingsContainer)
 			Scene.renderer.sceneRoot.removeChild(Scene.buildingsContainer);
+		
+		Scene.targetingOverlayContainer.clearChildren();
 		
 		Scene.nodeMaps.clearAll();
 		Scene.selectedNode = null;

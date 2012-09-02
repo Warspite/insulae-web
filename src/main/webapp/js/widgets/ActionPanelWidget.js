@@ -38,6 +38,12 @@ ActionPanelWidget.prototype.actionsOfBuildingLoaded = function(result) {
 	}
 };
 
-ActionPanelWidget.prototype.performAction = function(action) {
-	Widgets.actionDialog.displayAction(action, Widgets.actionPanel.lastSelectedBuilding);
+ActionPanelWidget.prototype.performAction = function(params) {
+	var p = params || {};
+	p.agent = Widgets.actionPanel.lastSelectedBuilding;
+	
+	if(p.action.requiresLocationId)
+		Scene.locationTargeter.select({callback: Widgets.actionDialog.displayAction, callbackParameters: p});
+	else
+		Widgets.actionDialog.displayAction(p);
 };

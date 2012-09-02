@@ -42,5 +42,5 @@ var ActionButtonNode = function(slot, action, building) {
 
 
 ActionButtonNode.prototype.clicked = function(self, mouse, event) {
-	Widgets.actionPanel.performAction(self.action);
+	Widgets.actionPanel.performAction({action: self.action});
 };

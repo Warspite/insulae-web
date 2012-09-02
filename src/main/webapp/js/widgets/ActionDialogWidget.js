@@ -55,6 +55,23 @@ var ActionDialogWidget = function() {
 	this.locationInfoBoxTitle.renderSettings.origin.horizontal = Direction.CENTER;
 	this.locationInfoBoxTitle.renderSettings.sizing.width = Sizing.TEXT;
 	
+	this.locationInfoBoxIcon = new RenderedNode();
+	this.locationInfoBoxIcon.renderSettings.graphicsType = GraphicsType.IMAGE;
+	this.locationInfoBoxIcon.renderSettings.size = {width: 32, height: 32};
+	this.locationInfoBoxIcon.renderSettings.position.y = 30;
+	this.locationInfoBoxIcon.renderSettings.anchor.horizontal = Direction.CENTER;
+	this.locationInfoBoxIcon.renderSettings.origin.horizontal = Direction.CENTER;
+	
+	this.locationInfoBoxBuildingIcon = new RenderedNode();
+	this.locationInfoBoxBuildingIcon.renderSettings.graphicsType = GraphicsType.IMAGE;
+	this.locationInfoBoxBuildingIcon.renderSettings.size = {width: 16, height: 16};
+	this.locationInfoBoxBuildingIcon.renderSettings.anchor = {horizontal: Direction.RIGHT, vertical: Direction.BOTTOM};
+	this.locationInfoBoxBuildingIcon.renderSettings.origin = {horizontal: Direction.RIGHT, vertical: Direction.BOTTOM};
+	
+	this.locationInfoBoxDescription = new TextNode("");
+	this.locationInfoBoxDescription.renderSettings.position.y = 65;
+	this.locationInfoBoxDescription.renderSettings.size.width = 125;
+	
 	this.inputBox = new RenderedNode();
 	this.inputBox.renderSettings.size = {width: 400, height: 200};
 	this.inputBox.renderSettings.graphicsType = GraphicsType.RECT;
@@ -106,7 +123,10 @@ var ActionDialogWidget = function() {
 	this.actionInfoBox.addChild(this.actionInfoBoxIcon);
 	this.actionInfoBox.addChild(this.actionInfoBoxDescription);
 	
+	this.locationInfoBoxIcon.addChild(this.locationInfoBoxBuildingIcon);
 	this.locationInfoBox.addChild(this.locationInfoBoxTitle);
+	this.locationInfoBox.addChild(this.locationInfoBoxIcon);
+	this.locationInfoBox.addChild(this.locationInfoBoxDescription);
 
 	this.inputBox.addChild(this.inputBoxTitle);
 	this.inputBox.addChild(this.inputBoxActionPointsText);
@@ -129,38 +149,60 @@ var ActionDialogWidget = function() {
 };
 
 ActionDialogWidget.prototype.performAction = function() {
-	console.log("I will now perform action " + Widgets.actionDialog.action.name);
+	var out = "I will now perform action " + Widgets.actionDialog.params.action.name;
+	if(Widgets.actionDialog.params.locationTarget)
+		out += " at " + Widgets.actionDialog.params.locationTarget.id;
+	console.log(out);
 	Widgets.actionDialog.rendered = false;
 };
 
-ActionDialogWidget.prototype.displayAction = function(action, agent) {
-	this.action = action;
-	this.agent = agent;
+ActionDialogWidget.prototype.displayAction = function(params) {
+	Widgets.actionDialog.params = params || {};
 	
-	this.updateActionInfo();
-	this.updateLocationInfo();
-	this.updateInput();
-	this.updateOutput();
+	Widgets.actionDialog.updateActionInfo();
+	Widgets.actionDialog.updateLocationInfo();
+	Widgets.actionDialog.updateInput();
+	Widgets.actionDialog.updateOutput();
 	
-	this.rendered = true;
+	Widgets.actionDialog.rendered = true;
 };
 
 ActionDialogWidget.prototype.updateActionInfo = function() {
-	this.actionInfoBoxTitle.setText(this.action.name);
-	this.actionInfoBoxIcon.renderSettings.image = "icons/actionButton/" + StaticData.actions[this.action.id].canonicalName + ".png";
+	this.actionInfoBoxTitle.setText(this.params.action.name);
+	this.actionInfoBoxIcon.renderSettings.image = "icons/actionButton/" + StaticData.actions[this.params.action.id].canonicalName + ".png";
 	this.actionInfoBoxIcon.imgStart();
-	this.actionInfoBoxDescription.setText(this.action.description);
+	this.actionInfoBoxDescription.setText(this.params.action.description);
 };
 
 ActionDialogWidget.prototype.updateLocationInfo = function() {
+	if(!this.params.locationTarget) {
+		this.locationInfoBoxTitle.setText("No location target");
+		this.locationInfoBoxIcon.rendered = false;
+		this.locationInfoBoxDescription.setText("");
 
+		return;
+	}
+	
+	var t = StaticData.locationTypes[this.params.locationTarget.locationTypeId];
+	this.locationInfoBoxTitle.setText(t.name);
+	this.locationInfoBoxIcon.renderSettings.image = "icons/location/" + t.canonicalName + ".png";
+	this.locationInfoBoxDescription.setText(t.description);
+	this.locationInfoBoxIcon.rendered = true;
+	this.locationInfoBoxBuildingIcon.rendered = false;
+	
+	$.each(Scene.nodeMaps.buildings, function(index, b) {
+		if(b.data.locationId == Widgets.actionDialog.params.locationTarget.id) {
+			Widgets.actionDialog.locationInfoBoxBuildingIcon.renderSettings.image = "icons/building/" + StaticData.buildingTypes[b.data.buildingTypeId].canonicalName + ".png";
+			Widgets.actionDialog.locationInfoBoxBuildingIcon.rendered = true;
+		}
+	});
 };
 
 ActionDialogWidget.prototype.updateOutput = function() {
 	this.outputBoxNonItemOutputStack.clearChildren();
 	
-	if(this.action.constructedBuildingTypeId != 0) {
-		var t = StaticData.buildingTypes[this.action.constructedBuildingTypeId];
+	if(this.params.action.constructedBuildingTypeId != 0) {
+		var t = StaticData.buildingTypes[this.params.action.constructedBuildingTypeId];
 		var constructedBuildingIcon = new RenderedNode();
 		constructedBuildingIcon.renderSettings.graphicsType = GraphicsType.IMAGE;
 		constructedBuildingIcon.renderSettings.image = "icons/building/" + t.canonicalName + ".png";
@@ -171,20 +213,20 @@ ActionDialogWidget.prototype.updateOutput = function() {
 };
 
 ActionDialogWidget.prototype.updateInput = function() {
-	var totalActionPointCost = this.action.actionPointCost;
+	var totalActionPointCost = this.params.action.actionPointCost;
 	
-	if(this.agent.hubDistanceCost != null) {
-		totalActionPointCost += this.agent.hubDistanceCost;
-		this.inputBoxActionPointsText.setText("Action point cost: " + totalActionPointCost + " (" + this.agent.actionPoints + " available)\n    Base cost: " + this.action.actionPointCost + "\n    Distance from industry hub: " + this.agent.hubDistanceCost);
+	if(this.params.agent.hubDistanceCost != null) {
+		totalActionPointCost += this.params.agent.hubDistanceCost;
+		this.inputBoxActionPointsText.setText("Action point cost: " + totalActionPointCost + " (" + this.params.agent.actionPoints + " available)\n    Base cost: " + this.params.action.actionPointCost + "\n    Distance from industry hub: " + this.params.agent.hubDistanceCost);
 	}
 	else {
-		this.inputBoxActionPointsText.setText("Action point cost: " + totalActionPointCost + " (" + agent.actionPoints + " available)");
+		this.inputBoxActionPointsText.setText("Action point cost: " + totalActionPointCost + " (" + this.params.agent.actionPoints + " available)");
 	}
 	
 	this.inputBoxItems.clear();
 	var inputItems = new Array();
 	$.each(StaticData.actionItemCosts, function(index, cost) {
-		if(cost.actionId == Widgets.actionDialog.action.id)
+		if(cost.actionId == Widgets.actionDialog.params.action.id)
 			inputItems.push(cost);
 	});
 	this.inputBoxItems.setStorage(inputItems);

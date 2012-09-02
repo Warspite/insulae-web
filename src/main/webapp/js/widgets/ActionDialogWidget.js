@@ -149,10 +149,11 @@ var ActionDialogWidget = function() {
 };
 
 ActionDialogWidget.prototype.performAction = function() {
-	var out = "I will now perform action " + Widgets.actionDialog.params.action.name;
+	var p = {actionId: Widgets.actionDialog.params.action.id, agentBuildingId: Widgets.actionDialog.params.agent.id};
 	if(Widgets.actionDialog.params.locationTarget)
-		out += " at " + Widgets.actionDialog.params.locationTarget.id;
-	console.log(out);
+		p.targetLocationId = Widgets.actionDialog.params.locationTarget.id; 
+	
+	Server.req("industry/Action", "POST", p, Widgets.actionDialog, Widgets.actionDialog.actionSucceeded);
 	Widgets.actionDialog.rendered = false;
 };
 
@@ -231,3 +232,8 @@ ActionDialogWidget.prototype.updateInput = function() {
 	});
 	this.inputBoxItems.setStorage(inputItems);
 };
+
+ActionDialogWidget.prototype.actionSucceeded = function(result, self) {
+	Scene.selectNode(Scene.selectedNode);
+};
+

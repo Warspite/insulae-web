@@ -83,6 +83,7 @@ var Scene = {
 	
 	selectNode: function(node) {
 		Scene.locationTargeter.cancel();
+		Scene.selectedNode = node;
 		if(Scene.selectedNodeMarker.parent)
 			Scene.selectedNodeMarker.parent.removeChild(Scene.selectedNodeMarker);
 		

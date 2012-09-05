@@ -81,6 +81,21 @@ var Scene = {
 		});
 	},
 	
+	selectedBuildingLoaded: function(result) {
+		var b = result.content;
+		var bNode = new BuildingNode(b, Scene.nodeMaps.locations[b.locationId]);
+		Scene.buildingsContainer.removeChild(Scene.nodeMaps.buildings[b.id]);
+		Scene.buildingsContainer.addChild(bNode);
+		Scene.nodeMaps.buildings[b.id] = bNode;
+		
+		bNode.addChild(Scene.selectedNodeMarker);
+		Scene.selectedNodeMarker.renderSettings.size = {width: bNode.renderSettings.size.width * 1.35, height: bNode.renderSettings.size.height * 1.35};
+		Scene.selectedNodeMarker.rendered = true;
+		
+		Widgets.actionPanel.displayBuildingActions(b);
+		Widgets.selectionInfoPanel.displayBuildingInfo(b);
+	},
+	
 	selectNode: function(node) {
 		Scene.locationTargeter.cancel();
 		Scene.selectedNode = node;
@@ -88,13 +103,8 @@ var Scene = {
 			Scene.selectedNodeMarker.parent.removeChild(Scene.selectedNodeMarker);
 		
 		if(node) {
-			node.addChild(Scene.selectedNodeMarker);
-			Scene.selectedNodeMarker.renderSettings.size = {width: node.renderSettings.size.width * 1.35, height: node.renderSettings.size.height * 1.35};
-			Scene.selectedNodeMarker.rendered = true;
-			
 			if(node.constructor == BuildingNode) {
-				Widgets.actionPanel.displayBuildingActions(node.data);
-				Widgets.selectionInfoPanel.displayBuildingInfo(node.data);
+				Server.req("industry/Building", "GET", {id: node.data.id}, null, Scene.selectedBuildingLoaded);
 			}
 		}
 		else {

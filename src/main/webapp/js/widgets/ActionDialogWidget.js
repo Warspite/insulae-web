@@ -247,6 +247,6 @@ ActionDialogWidget.prototype.updateInput = function() {
 };
 
 ActionDialogWidget.prototype.actionSucceeded = function(result, self) {
-	Scene.selectNode(Scene.selectedNode);
+	Scene.loadAreaContents(Scene.selectedArea.id);
 };
 

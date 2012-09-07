@@ -49,9 +49,11 @@ SelectionInfoPanelWidget.prototype.clear = function() {
 
 SelectionInfoPanelWidget.prototype.displayBuildingInfo = function(building) {
 	this.titleText.setText(StaticData.buildingTypes[building.buildingTypeId].name);
+	this.actionPointsBar.complete = false;
 	this.actionPointsBar.targetProgress = StaticData.buildingTypes[building.buildingTypeId].maximumActionPoints;
 	this.actionPointsBar.progress = building.actionPoints;
-	this.actionPointsBar.text.setText("Action points: " + building.actionPoints + " / " + StaticData.buildingTypes[building.buildingTypeId].maximumActionPoints);
+	this.actionPointsBar.completeTextString = "Action points: " + building.actionPoints + " / " + StaticData.buildingTypes[building.buildingTypeId].maximumActionPoints;
+	this.actionPointsBar.text.setText(this.actionPointsBar.completeTextString);
 	Server.req("industry/ItemStorage", "GET", {buildingId: building.id}, null, Widgets.selectionInfoPanel.itemsOfBuildingLoaded);
 };
 

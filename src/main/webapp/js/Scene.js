@@ -23,29 +23,38 @@ var Scene = {
 		Scene.selectedNodeMarker.rendered = false;
 		Scene.selectedNodeMarker.zIndex = -1;
 		
+		Scene.locationsContainer = new RenderedNode();
+		Scene.locationsContainer.zIndex = 0;
+		Scene.renderer.sceneRoot.addChild(Scene.locationsContainer);
+		Scene.nodeMaps.locations = {};
+		
+		Scene.buildingsContainer = new RenderedNode();
+		Scene.buildingsContainer.zIndex = 1;
+		Scene.renderer.sceneRoot.addChild(Scene.buildingsContainer);
+		Scene.nodeMaps.buildings = {};
 	},
 	
 	clear: function() {
-		if(Scene.locationsContainer)
-			Scene.renderer.sceneRoot.removeChild(Scene.locationsContainer);
-		
-		if(Scene.buildingsContainer)
-			Scene.renderer.sceneRoot.removeChild(Scene.buildingsContainer);
-		
+		Scene.locationsContainer.clearChildren();
+		Scene.buildingsContainer.clearChildren();
 		Scene.targetingOverlayContainer.clearChildren();
-		
 		Scene.nodeMaps.clearAll();
 		Scene.selectedNode = null;
 	},
 	
 	selectArea: function(area) {
+		Scene.clear();
 		Scene.selectedArea = area;
-		Server.req("geography/Location", "GET", {areaId: Scene.selectedArea.id}, null, Scene.locationsLoaded);
-		Server.req("geography/LocationNeighbor", "GET", {areaId: Scene.selectedArea.id}, null, Scene.locationNeighborsLoaded);
 		Scene.splash.rendered = false;
 		Scene.renderer.sceneRoot.reset();
 		Widgets.actionPanel.rendered = true;
 		Widgets.selectionInfoPanel.rendered = true;
+		Scene.loadAreaContents(Scene.selectedArea.id);
+	},
+	
+	loadAreaContents: function(areaId) {
+		Server.req("geography/Location", "GET", {areaId: Scene.selectedArea.id}, null, Scene.locationsLoaded);
+		Server.req("geography/LocationNeighbor", "GET", {areaId: Scene.selectedArea.id}, null, Scene.locationNeighborsLoaded);
 	},
 	
 	locationNeighborsLoaded: function(result) {
@@ -53,47 +62,37 @@ var Scene = {
 	},
 	
 	locationsLoaded: function(result) {
-		DynamicData.addLocations(result.content.locations);
-		Scene.clear();
-		Scene.locationsContainer = new RenderedNode();
-		Scene.renderer.sceneRoot.addChild(Scene.locationsContainer);
+		DynamicData.setAreaLocations(Scene.selectedArea.id, result.content.locations);
+		
+		Scene.nodeMaps.locations = {};
+		Scene.locationsContainer.clearChildren();
 		
 		$.each(result.content.locations, function(index, loc) {
 			var node = new LocationNode(loc);
+			
 			Scene.locationsContainer.addChild(node);
 			Scene.nodeMaps.locations[loc.id] = node;
 		});
-		
+
 		Server.req("industry/Building", "GET", {areaId: Scene.selectedArea.id}, null, Scene.buildingsLoaded);
 	},
 
 	buildingsLoaded: function(result) {
-		DynamicData.addBuildings(result.content.buildings);
+		DynamicData.setAreaBuildings(Scene.selectedArea.id, result.content.buildings);
+		
+		var oldNodeMap = Scene.nodeMaps.buildings;
 		Scene.nodeMaps.buildings = {};
-		Scene.buildingsContainer = new RenderedNode();
-		Scene.buildingsContainer.zIndex = 1;
-		Scene.renderer.sceneRoot.addChild(Scene.buildingsContainer);
+		Scene.buildingsContainer.clearChildren();
 		
 		$.each(result.content.buildings, function(index, b) {
 			var bNode = new BuildingNode(b, Scene.nodeMaps.locations[b.locationId]);
+
+			if(oldNodeMap[b.id] && oldNodeMap[b.id] == Scene.selectedNode)
+				Scene.selectNode(bNode);
+			
 			Scene.buildingsContainer.addChild(bNode);
 			Scene.nodeMaps.buildings[b.id] = bNode;
 		});
-	},
-	
-	selectedBuildingLoaded: function(result) {
-		var b = result.content;
-		var bNode = new BuildingNode(b, Scene.nodeMaps.locations[b.locationId]);
-		Scene.buildingsContainer.removeChild(Scene.nodeMaps.buildings[b.id]);
-		Scene.buildingsContainer.addChild(bNode);
-		Scene.nodeMaps.buildings[b.id] = bNode;
-		
-		bNode.addChild(Scene.selectedNodeMarker);
-		Scene.selectedNodeMarker.renderSettings.size = {width: bNode.renderSettings.size.width * 1.35, height: bNode.renderSettings.size.height * 1.35};
-		Scene.selectedNodeMarker.rendered = true;
-		
-		Widgets.actionPanel.displayBuildingActions(b);
-		Widgets.selectionInfoPanel.displayBuildingInfo(b);
 	},
 	
 	selectNode: function(node) {
@@ -103,8 +102,13 @@ var Scene = {
 			Scene.selectedNodeMarker.parent.removeChild(Scene.selectedNodeMarker);
 		
 		if(node) {
+			node.addChild(Scene.selectedNodeMarker);
+			Scene.selectedNodeMarker.renderSettings.size = {width: node.renderSettings.size.width * 1.35, height: node.renderSettings.size.height * 1.35};
+			Scene.selectedNodeMarker.rendered = true;
+			
 			if(node.constructor == BuildingNode) {
-				Server.req("industry/Building", "GET", {id: node.data.id}, null, Scene.selectedBuildingLoaded);
+				Widgets.actionPanel.displayBuildingActions(node.data);
+				Widgets.selectionInfoPanel.displayBuildingInfo(node.data);
 			}
 		}
 		else {

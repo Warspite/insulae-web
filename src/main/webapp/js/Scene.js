@@ -107,8 +107,7 @@ var Scene = {
 			Scene.selectedNodeMarker.rendered = true;
 			
 			if(node.constructor == BuildingNode) {
-				Widgets.actionPanel.displayBuildingActions(node.data);
-				Widgets.selectionInfoPanel.displayBuildingInfo(node.data);
+				Server.req("industry/Building", "GET", {id: node.data.id}, null, Scene.selectedBuildingLoaded);
 			}
 		}
 		else {
@@ -116,5 +115,10 @@ var Scene = {
 			Widgets.actionPanel.clear();
 			Widgets.selectionInfoPanel.clear();
 		}
+	},
+	
+	selectedBuildingLoaded: function(result) {
+		Widgets.actionPanel.displayBuildingActions(result.content);
+		Widgets.selectionInfoPanel.displayBuildingInfo(result.content);
 	}
 };

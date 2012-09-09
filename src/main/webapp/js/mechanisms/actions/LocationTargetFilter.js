@@ -5,13 +5,13 @@ LocationTargetFilter.prototype.filter = function(action, agent) {
 	var filtered = DynamicData.locationsByArea[Scene.selectedArea.id];
 	
 	if(action.constructedBuildingTypeId != 0)
-		return this.filterByRoads(this.filterByExistingBuildings(this.filterByRange(filtered, DynamicData.locations[agent.locationId], StaticData.buildingTypes[agent.buildingTypeId].industryHubRange)));
+		filtered = this.filterByExistingBuildings(this.filterByRange(filtered, DynamicData.locations[agent.locationId], StaticData.buildingTypes[agent.buildingTypeId].industryHubRange));
 	
 	if(action.maximumRange != -1)
 		filtered = this.filterByRange(filtered, DynamicData.locations[agent.locationId], action.maximumRange);
 	
 	if(action.canonicalName == "constructRoadTargeted")
-		return this.filterByRoads(this.filterByExistingBuildings(filtered));
+		return this.filterByRoads(filtered);
 
 	return filtered;
 };

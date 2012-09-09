@@ -62,6 +62,7 @@ var MenuBar = {
 		$('#loginEmail').val('');
 		$('#loginPassword').val('');
 		
+		Widgets.avatarSelection.selectedAvatar = null;
 		Widgets.avatarSelection.rendered = false;
 		Widgets.areaSelection.rendered = false;
 		Widgets.selectionInfoPanel.rendered = false;

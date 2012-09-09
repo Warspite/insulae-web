@@ -81,13 +81,15 @@ var Scene = {
 		DynamicData.setAreaBuildings(Scene.selectedArea.id, result.content.buildings);
 		
 		var oldNodeMap = Scene.nodeMaps.buildings;
+		var previouslySelectedNode = Scene.selectedNode;
+		Scene.selectNode(null);
 		Scene.nodeMaps.buildings = {};
 		Scene.buildingsContainer.clearChildren();
 		
 		$.each(result.content.buildings, function(index, b) {
 			var bNode = new BuildingNode(b, Scene.nodeMaps.locations[b.locationId]);
 
-			if(oldNodeMap[b.id] && oldNodeMap[b.id] == Scene.selectedNode)
+			if(oldNodeMap[b.id] && oldNodeMap[b.id] == previouslySelectedNode)
 				Scene.selectNode(bNode);
 			
 			Scene.buildingsContainer.addChild(bNode);

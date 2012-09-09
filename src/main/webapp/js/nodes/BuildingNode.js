@@ -9,3 +9,7 @@ var BuildingNode = function(data, locationNode) {
 	this.renderSettings.position = {x: locationNode.renderSettings.position.x + locationNode.renderSettings.size.width, y: locationNode.renderSettings.position.y + locationNode.renderSettings.size.height};
 	this.renderSettings.origin = {horizontal: Direction.RIGHT, vertical: Direction.BOTTOM};
 };
+
+BuildingNode.prototype.destroy = function() {
+	Server.req("industry/Building", "DELETE", {id: this.data.id}, null, Scene.loadAreaContents);
+};

@@ -2,6 +2,7 @@ var AvatarSelectionWidget = function() {
 	
 	mixin(new FoldingNode(Direction.RIGHT, this), this);
 	
+	this.selectedAvatar = null;
 	this.renderSettings.anchor.horizontal = Direction.RIGHT;
 	this.renderSettings.origin.horizontal = Direction.RIGHT;
 	this.foldButton.renderSettings.anchor.horizontal = Direction.LEFT;
@@ -37,6 +38,7 @@ AvatarSelectionWidget.prototype.createNewAvatarButton = function() {
 };
 
 AvatarSelectionWidget.prototype.selectAvatar = function(avatar) {
+	Widgets.avatarSelection.selectedAvatar = avatar;
 	Server.req("geography/Area", "GET", {realmId: avatar.realmId}, Widgets.areaSelection, Widgets.areaSelection.areasLoaded);
 };
 

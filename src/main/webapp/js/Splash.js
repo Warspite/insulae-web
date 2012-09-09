@@ -28,9 +28,11 @@ var Splash = function()
 	
 	this.addEventHandler(EventType.PROGRESS_COMPLETE, function(self, source, event) {
 		Error.setup();
+		Message.setup();
 		MenuBar.setup(self.parent.parent);
 		RegisterAccount.setup();
 		CreateAvatar.setup();
+		CreateTroubleReport.setup();
 		Widgets.setup(self.parent);
 
 		MenuBar.showChild("#loginForm");

@@ -12,8 +12,12 @@ input, select { border: solid 1px #e5e5f0; padding: 0; margin: 0; width: 125px; 
 
 .ajaxSpinner { width: 24px; height: 24px; float: left; visibility: collapse; background-image: url('../images/ajax-spinner.gif'); background-size: 24px 24px; }
 
-.menuBarChild { height: 0px; visibility: collapse; float: right; }
+.menuBarChild { height: 0px; visibility: collapse; }
 .button:hover { cursor: pointer; }
+
+#loginForm { float: right; }
+#currentSession { float: right; }
+#helpAndTroubleReport { float: left; visibility: visible; }
 
 .disabled { color: #808080; background-color: rgba(230,230,230,0.7); }
 .disabled:hover { cursor: default; }
@@ -52,4 +56,9 @@ input, select { border: solid 1px #e5e5f0; padding: 0; margin: 0; width: 125px; 
 .formErrorFeedback {
 	background-color: rgba(255,0,0,0.2);
 	color: rgba(255,0,0,1.0);
+}
+
+.createTroubleReportTextArea {
+	width: 220px;
+	height: 100px;
 }

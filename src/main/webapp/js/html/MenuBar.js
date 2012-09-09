@@ -30,6 +30,11 @@ var MenuBar = {
 			RegisterAccount.show();
 		});
 		
+		$("#createTroubleReportLink").click(function(event){
+			CreateTroubleReport.clear();
+			CreateTroubleReport.show();
+		});
+		
 		setInterval(function(){ $("#menuBar").css("width", renderer.surface.width); }, 100);
 	},
 		

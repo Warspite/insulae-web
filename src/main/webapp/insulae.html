@@ -12,6 +12,13 @@
 </head>
 <body>
 	<div id="menuBar" >
+		<div id="helpAndTroubleReport" class="menuBarChild">
+			<table>
+				<tr><td style="width: 70px;">Having problems?</td></tr>
+				<tr><td>No help yet, but <a href="#" id="createTroubleReportLink">write a trouble report!</a></td></tr>
+			</table>
+		</div>
+
 		<div id="loginForm" class="menuBarChild">
 			<table>
 				<tr><td style="width: 70px;">No account?</td><td>Email</td><td>Password</td><td></td></tr>
@@ -30,7 +37,15 @@
 		<br />
 		<span id="errorMessage"></span><br/>
 		<br/>
-		<a href="#" id="errorDismissLink">Ok, carry on...</a>
+		<a href="#" id="errorDismissLink">Ok, carry on...</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" id="errorReportLink">I want to report this!</a>
+	</div>
+	
+	<div id="message" class="centeredPopup">
+		<h1 id="messageTitle">Message</h1>
+		<br />
+		<span id="messageBody"></span><br/>
+		<br/>
+		<a href="#" id="messageDismissLink">Ok!</a>
 	</div>
 	
 	<div id="registerAccount" class="centeredPopup">
@@ -61,6 +76,18 @@
 		</table>
 	</div>
 	
+	<div id="createTroubleReport" class="centeredPopup">
+		<h1>Create trouble report</h1>
+		(<a href="#" id="cancelCreateTroubleReportLink">Cancel</a>)<br />
+		<br />
+		<table>
+			<tr><td>Type</td><td><select id="createTroubleReportTroubleReportTypeId" class="createTroubleReportInputField" ></select></td></tr>
+			<tr><td>Slogan</td><td><input type="text" id="createTroubleReportSlogan" class="createTroubleReportInputField" maxlength="20" /></td><td id="createTroubleReportSloganFeedback" class="formFeedback"></td></tr>
+			<tr><td colspan="3"><textarea id="createTroubleReportContent" class="createTroubleReportTextArea"></textarea></td></tr>
+			<tr><td></td><td><input type="submit" value="Create trouble report" id="createTroubleReportButton" class="createTroubleReportInputField button disabled"/></td></tr>
+		</table>
+	</div>
+
 	<canvas id="mainCanvas"></canvas>
 </body>
 </html>

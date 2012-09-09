@@ -26,9 +26,11 @@ include("data/DynamicData.js");
 include("data/StaticData.js");
 
 include("html/CreateAvatar.js");
+include("html/CreateTroubleReport.js");
 include("html/Error.js");
 include("html/FormUtility.js");
 include("html/MenuBar.js");
+include("html/Message.js");
 include("html/RegisterAccount.js");
 
 include("mechanisms/actions/LocationTargeter.js");

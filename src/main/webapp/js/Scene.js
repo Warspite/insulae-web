@@ -28,8 +28,12 @@ var Scene = {
 		Scene.renderer.sceneRoot.addChild(Scene.locationsContainer);
 		Scene.nodeMaps.locations = {};
 		
+		Scene.resourcesContainer = new RenderedNode();
+		Scene.resourcesContainer.zIndex = 1;
+		Scene.renderer.sceneRoot.addChild(Scene.resourcesContainer);
+		
 		Scene.buildingsContainer = new RenderedNode();
-		Scene.buildingsContainer.zIndex = 1;
+		Scene.buildingsContainer.zIndex = 2;
 		Scene.renderer.sceneRoot.addChild(Scene.buildingsContainer);
 		Scene.nodeMaps.buildings = {};
 	},
@@ -75,6 +79,7 @@ var Scene = {
 		});
 
 		Server.req("industry/Building", "GET", {areaId: Scene.selectedArea.id}, null, Scene.buildingsLoaded);
+		Server.req("geography/Resource", "GET", {areaId: Scene.selectedArea.id}, null, Scene.resourcesLoaded);
 	},
 
 	buildingsLoaded: function(result) {
@@ -94,6 +99,21 @@ var Scene = {
 			
 			Scene.buildingsContainer.addChild(bNode);
 			Scene.nodeMaps.buildings[b.id] = bNode;
+		});
+	},
+	
+	resourcesLoaded: function(result) {
+		DynamicData.setAreaResources(Scene.selectedArea.id, result.content.resources);
+		
+		Scene.resourcesContainer.clearChildren();
+		
+		$.each(DynamicData.locationsByArea[Scene.selectedArea.id], function(index, location) {
+			if(!DynamicData.resourcesByLocation[location.id])
+				return;
+			
+			$.each(DynamicData.resourcesByLocation[location.id], function(index, resource) {
+				Scene.resourcesContainer.addChild(new ResourceNode(resource, index, Scene.nodeMaps.locations[location.id]));
+			});
 		});
 	},
 	

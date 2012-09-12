@@ -42,6 +42,7 @@ include("nodes/ItemStorageNode.js");
 include("nodes/ItemStorageTableNode.js");
 include("nodes/LocationNode.js");
 include("nodes/LocationTargetingNode.js");
+include("nodes/ResourceNode.js");
 
 include("widgets/ActionDialogWidget.js");
 include("widgets/ActionPanelWidget.js");

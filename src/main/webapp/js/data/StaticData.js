@@ -1,10 +1,11 @@
 var StaticData = {
 	load: function(progressMeter) {
-		progressMeter.targetProgress = 12;
+		progressMeter.targetProgress = 13;
 
 		Server.req("geography/LocationType", "GET", null, progressMeter, StaticData.locationTypesLoaded);
 		Server.req("geography/TransportationType", "GET", null, progressMeter, StaticData.transportationTypesLoaded);
 		Server.req("geography/TransportationCost", "GET", null, progressMeter, StaticData.transportationCostsLoaded);
+		Server.req("geography/ResourceType", "GET", null, progressMeter, StaticData.resourceTypesLoaded);
 		Server.req("industry/BuildingType", "GET", null, progressMeter, StaticData.buildingTypesLoaded);
 		Server.req("industry/ItemType", "GET", null, progressMeter, StaticData.itemTypesLoaded);
 		Server.req("industry/Action", "GET", null, progressMeter, StaticData.actionsLoaded);
@@ -31,6 +32,11 @@ var StaticData = {
 		progressMeter.progress += 1;
 	},
 
+	resourceTypesLoaded: function(result, progressMeter) {
+		StaticData.resourceTypes = Server.mapify(result.content.resourceTypes);
+		progressMeter.progress += 1;
+	},
+	
 	buildingTypesLoaded: function(result, progressMeter) {
 		StaticData.buildingTypes = Server.mapify(result.content.buildingTypes);
 		progressMeter.progress += 1;

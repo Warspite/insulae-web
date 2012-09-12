@@ -5,6 +5,7 @@ var DynamicData = {
 		DynamicData.locationsByArea = {};
 		DynamicData.buildings = {};
 		DynamicData.buildingsByLocation = {};
+		DynamicData.resourcesByLocation = {};
 	},
 	
 	setAreaBuildings: function(areaId, buildings) {
@@ -13,6 +14,17 @@ var DynamicData = {
 		$.each(buildings, function(index, b) {
 			DynamicData.buildings[b.id] = b;
 			DynamicData.buildingsByLocation[b.locationId] = b;
+		});
+	},
+	
+	setAreaResources: function(areaId, resources) {
+		DynamicData.removeAreaResources(areaId);
+		
+		$.each(resources, function(index, r) {
+			if(!DynamicData.resourcesByLocation[r.locationId])
+				DynamicData.resourcesByLocation[r.locationId] = new Array();
+			
+			DynamicData.resourcesByLocation[r.locationId].push(r);
 		});
 	},
 	
@@ -53,6 +65,17 @@ var DynamicData = {
 				delete DynamicData.buildingsByLocation[l.id];
 				delete DynamicData.buildings[b.id];
 			}
+		});
+	},
+	
+	removeAreaResources: function(areaId) {
+		if(!DynamicData.locationsByArea[areaId])
+			return;
+		
+		$.each(DynamicData.locationsByArea[areaId], function(index, l) {
+			var r = DynamicData.resourcesByLocation[l.id];
+			if(r)
+				delete DynamicData.resourcesByLocation[r.id];
 		});
 	}	
 };

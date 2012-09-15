@@ -75,7 +75,7 @@ var DynamicData = {
 		$.each(DynamicData.locationsByArea[areaId], function(index, l) {
 			var r = DynamicData.resourcesByLocation[l.id];
 			if(r)
-				delete DynamicData.resourcesByLocation[r.id];
+				delete DynamicData.resourcesByLocation[l.id];
 		});
 	}	
 };
